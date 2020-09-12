@@ -1,0 +1,50 @@
+# 
+# Problems: You may die on layer 3 if a point/lifeforce will be in front of you which you cant fetch (then enemy behind you will kill you)
+# 
+fields:
+  - 0: [ 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 3: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 3: [ 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+  - 3: [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+  - 3: [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+  - 3: [ 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ]
+  - 3: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  
+difficulties:
+ - very_easy:
+ - easy: 
+      enemies: 
+      - path: 0
+        color: "RED"
+      overrides: [ [ a b ], [b c] ] # not used/implemented right now... TODO override field entryies
+ - normal:
+      enemies: 
+      # TODO Update path 1
+      - path: 1
+        color: "BLUE"
+ - hard:
+      enemies: 
+      - path: 1
+        color: "BLUE" 
+      - path: 2
+        color: "GREEN"
+      overrides: [ [ a b ], [b c] ]
+ - very_hard:
+      enemies: 
+      - path: 1
+        color: "BLACK"
+      - path: 2
+        color: "WHITE"
+
+# path 0 only on two x values (inner path)
+# path 1: only on the lower x value (lower path)
+# path 2: round path
+path:
+ - vectors: "(0,1,8),(0,1,7),(0,1,6),(0,1,5),(0,1,4),(0,1,3),(0,1,2),(0,1,3),(0,1,4),(0,1,5),(0,1,6),(0,1,7),(0,1,8),(0,1,7)"
+ - vectors: "(2,1,10),(3,1,10),(3,1,9),(3,1,8),(3,1,7),(3,1,6),(3,1,5),(3,1,4),(3,1,3),(3,1,2),(3,1,1),(3,1,0),(2,1,0),(2,1,1),(2,1,2),(2,1,3),(2,1,4),(2,1,5),(2,1,6),(2,1,7),(2,1,8),(2,1,9),(2,1,10),(3,1,10)"
+ - vectors: "(0,4,8),(0,4,7),(0,4,6),(0,4,5),(0,4,4),(0,4,3),(0,4,2),(1,4,2),(1,4,1),(2,4,1),(2,4,0),(3,4,0),(3,4,1),(4,4,1),(4,4,2),(5,4,2),(5,4,3),(5,4,4),(5,4,5),(5,4,6),(5,4,7),(5,4,8),(4,4,8),(4,4,9),(3,4,9),(3,4,10),(2,4,10),(2,4,9),(1,4,9),(1,4,8),(0,4,8),(0,4,7)"

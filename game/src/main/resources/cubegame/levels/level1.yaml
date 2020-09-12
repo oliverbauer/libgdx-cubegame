@@ -1,0 +1,81 @@
+##################################################################################################
+# Fielddefinition.                                                                               #
+# Example:                                                                                       #
+#                                                                                                #
+# fields:                                                                                        #
+# - 0: [1, 1, 1, 1]                                                                              #
+# - 0: [2, 1, 1, 1]                                                                              #
+# - 3: [1, 1, 1, 0]                                                                              #
+# - 3: [1, 1, 1, 1]                                                                              #
+#                                                                                                #
+# In the example above there are 2 areas (y=0 and y=3). Each layer ranges from x= {0,1},         #
+# z = {0,1,2,3}. Since "2" is the player position, the player stays on position (0,0,0).         #
+# On position (1,3,3) there is a "hole".                                                         #
+#                                                                                                #
+# Important: If there are different areas, they must leave 2 clean y values between each!        #
+# Although, all areas *must* have the same size for the length of x and z.                       #
+# (Implementation detail: Player will be on layer L+1 (in example: y=1), layer L+2 will be       #
+# reserved for enemies (even if they move on L+1) or other blocks (don't ask... not well         #
+# implemented)                                                                                   #
+#                                                                                                #
+# Currently the following numbers/chars are considered:                                          #
+#   0 null                                                                                       #
+#   1 ground                                                                                     # 
+#   2 player (on x=1,z=3 in this example)                                                        #
+#   3 jumper right                                                                               #
+#   4 jumper left                                                                                #
+#   5 jumper forward                                                                             #
+#   6 jumper backward                                                                            #
+#   7 elevator up (must have an layer above (min layer = layer+3) with ground on x/z-position)   #
+#   8 elevator down (must have an layer below (min layer = layer-3) with ground on x/z position) #
+#                                                                                                #
+# This starter level contains only one layer with x={0,1,2,3,4,5}, z={0,1,...10}                 #
+##################################################################################################
+fields:
+  - 0: [ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 ]
+  - 0: [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ]
+  - 0: [ 0, 1, 1, 2, 1, 1, 1, 1, 1, 1, 0 ]
+  - 0: [ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0 ]
+
+################################################################################################
+#                                                                                              #
+# There are 5 difficulties available in each level. It is not necessary to define each         #
+# difficulty, but level-definition is better to read                                           #
+# On each level there could be as many enemies as you like. Each enemy must define a path      #
+# (range start from 0) which must be availble below. Although each enemy must define a color   #
+#                                                                                              #
+################################################################################################
+difficulties:
+ - very_easy:
+ - easy: 
+      enemies: 
+      - path: 0
+        color: "RED"
+      overrides: [ [ a b ], [b c] ] # not used/implemented right now... TODO override field entryies
+ - normal:
+      enemies: 
+      - path: 1
+        color: "BLUE"
+ - hard:
+      enemies: 
+      - path: 1
+        color: "BLUE" 
+      - path: 2
+        color: "GREEN"
+      overrides: [ [ a b ], [b c] ]
+ - very_hard:
+      enemies: 
+      - path: 1
+        color: "BLUE"
+      - path: 2
+        color: "RED"
+
+# path 0 only on two x values (inner path)
+# path 1: only on the lower x value (lower path)
+# path 2: round path
+path:
+ - vectors: "(0,1,8),(0,1,7),(0,1,6),(0,1,5),(0,1,4),(0,1,3),(0,1,2),(0,1,3),(0,1,4),(0,1,5),(0,1,6),(0,1,7),(0,1,8),(0,1,7)"
+ - vectors: "(2,1,10),(3,1,10),(3,1,9),(3,1,8),(3,1,7),(3,1,6),(3,1,5),(3,1,4),(3,1,3),(3,1,2),(3,1,1),(3,1,0),(2,1,0),(2,1,1),(2,1,2),(2,1,3),(2,1,4),(2,1,5),(2,1,6),(2,1,7),(2,1,8),(2,1,9),(2,1,10),(3,1,10)"
+ - vectors: "(0,1,8),(0,1,7),(0,1,6),(0,1,5),(0,1,4),(0,1,3),(0,1,2),(1,1,2),(1,1,1),(2,1,1),(2,1,0),(3,1,0),(3,1,1),(4,1,1),(4,1,2),(5,1,2),(5,1,3),(5,1,4),(5,1,5),(5,1,6),(5,1,7),(5,1,8),(4,1,8),(4,1,9),(3,1,9),(3,1,10),(2,1,10),(2,1,9),(1,1,9),(1,1,8),(0,1,8),(0,1,7)"
