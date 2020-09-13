@@ -35,6 +35,27 @@ public class TextureFactory {
 		return new Texture( mask );
 	}
 	
+	public static Texture createTextureWithBorder(Color color, java.awt.Color borderColor) {
+		BufferedImage bufferedImage = new BufferedImage(80, 80, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = bufferedImage.createGraphics();
+        
+        g2d.setColor(borderColor);
+        g2d.fillRect(0, 0, 80, 980);
+        
+        g2d.setColor(toAWTColor(color));
+        g2d.fillRect(2, 2, 76, 76);
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try {
+			ImageIO.write(bufferedImage, "png", baos);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        byte[] byteArray = baos.toByteArray();
+        Pixmap mask = new Pixmap(byteArray, 0, byteArray.length);
+		return new Texture( mask );
+	}
+	
 	public static Texture createLifeforceTexture(Color color) {
 		final int width = 80;
 		final int height = 80;

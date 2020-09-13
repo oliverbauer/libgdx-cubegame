@@ -38,6 +38,7 @@ public class GameScreen implements Screen {
 	private PerspectiveCamera perspectiveCamera;
 	private CameraInputController camController;
 	private ModelInstance gridInstance;
+	private ModelInstance line;
 
 	private Keyboard keyboard;
 	private Level level;
@@ -56,17 +57,16 @@ public class GameScreen implements Screen {
 		environment.set(new ColorAttribute(ColorAttribute.AmbientLight, 0.5f, 0.5f, 0.9f, 1f));
 
 		modelBatch = new ModelBatch();
-		perspectiveCamera = new PerspectiveCamera(100f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+		
+		perspectiveCamera = new PerspectiveCamera(100, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		level = new YAMLLevel1(this, perspectiveCamera);
 				
-		perspectiveCamera.lookAt(level.xlength()/2, 0 ,level.zlength()/2);
-		perspectiveCamera.position.set(0, 5, 0);
-		perspectiveCamera.update();
-
+		updateCamera();
+		
 		gridInstance = new ModelInstance(Grid.createGridModel());
 		
 		camController = new CameraInputController(perspectiveCamera);
-		camController.reset();
 
 		keyboard = new Keyboard(level);
 
@@ -125,6 +125,7 @@ public class GameScreen implements Screen {
 		if (gridInstance != null && Config.showGrid) {
 			modelBatch.render(gridInstance, environment);
 		}
+		modelBatch.render(line, environment);
 		
 		level.cameraUpdate(perspectiveCamera);
 		if (!level.isFailed() && !level.isCompleted()) {
@@ -212,12 +213,29 @@ public class GameScreen implements Screen {
 		keyboard.g = level;
 		camController.reset();
 
-		perspectiveCamera.lookAt(level.xlength()/2, 0 ,level.zlength()/2);
-		perspectiveCamera.position.set(0, 5, 0);
-		perspectiveCamera.update();
+		updateCamera();
 		
 		level.getPlayer().isMoving = false;
 		playerController = new PlayerController(level, this);
+	}
+	
+	private void updateCamera() {
+		int lookatX = level.xlength()/2;
+		int lookatY = -5;
+		int lookatZ = level.zlength()/2;
+		perspectiveCamera.lookAt(lookatX, lookatY, lookatZ);
+		int camX = 0;
+		int camY = 8;
+		int camZ = 0;//level.zlength()/2;//0;
+		perspectiveCamera.position.set(camX, camY, camZ);
+		
+//		perspectiveCamera.rotate(perspectiveCamera.direction, -40);
+		
+		perspectiveCamera.update();
+		
+		line = new ModelInstance(Grid.createLine(
+				camX, camY, camZ,
+				lookatX, lookatY, lookatZ));
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import io.libgdx.cubegame.blocks.BlockType;
 public class BlockFactory {
 	private static final Color groundColor = Color.BLUE;
 	
-	private static final BlendingAttribute blendingAttribute = new BlendingAttribute(.7f);
+	private static final BlendingAttribute blendingAttribute = new BlendingAttribute(.3f);
 	
 	public static Block createGround(int x, int y, int z) {
 		return createGround(groundColor, BlockType.GROUND, x, y, z);
@@ -36,7 +36,7 @@ public class BlockFactory {
 	 * Only for Ground!
 	 */
 	private static Block createGround(Color color, BlockType type, int x, int y, int z) {
-		Texture texture = TextureFactory.createTexture(color);
+		Texture texture = TextureFactory.createTextureWithBorder(color, java.awt.Color.YELLOW);
 		
 		ColorAttribute colorAttribute = ColorAttribute.createEmissive(color);
 		TextureAttribute textureAttribute = TextureAttribute.createDiffuse(texture);
@@ -57,8 +57,8 @@ public class BlockFactory {
 		
 		Material topMaterial = new Material(colorAttribute, textureAttribute);
 
-		Texture texture32 = TextureFactory.createTexture(color);
-		Material otherMaterial = new Material(TextureAttribute.createDiffuse(texture32));
+		Texture texture = TextureFactory.createTexture(color);
+		Material otherMaterial = new Material(TextureAttribute.createDiffuse(texture));
 
 		return createBlock(topMaterial, otherMaterial, BlockType.LIFEFORCE, color, x, y, z);
 	}

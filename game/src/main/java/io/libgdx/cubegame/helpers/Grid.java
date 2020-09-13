@@ -30,4 +30,14 @@ public class Grid {
 		builder.line(0, 0, 0, 0, 0, 100);
 		return modelBuilder.end();
 	}
+	
+	// Debugging for https://github.com/oliverbauer/libgdx-cubegame/issues/1
+	public static Model createLine(int x1, int y1, int z1, int x2, int y2, int z2) {
+		ModelBuilder modelBuilder = new ModelBuilder();
+		modelBuilder.begin();
+		MeshPartBuilder builder = modelBuilder.part("grid", GL20.GL_LINES, Usage.Position, new Material());
+		builder.line(x1, y1, z1, x2, y2, z2);
+		return modelBuilder.end();
+
+	}
 }
