@@ -49,39 +49,19 @@ public class StageHUD {
 		stage.addActor(tableLeft);
 	}
 	
-	boolean failed = false;
-	boolean completed = false;
 	private float remainingTime;
 	
 	public void init(Level level) {
 		this.remainingTime = level.getTimeLimit();
-		failed = false;
-		completed = false;
 	}
 	
-	public boolean isFailed() {
-		return failed;
-	}
-
-	public void setFailed(boolean failed) {
-		this.failed = failed;
-	}
-
-	public boolean isCompleted() {
-		return completed;
-	}
-
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
-
 	public void render(Level level) {
 		// Points/Liveforces/Remaining time
 		labelLifeforces.setText("Lifeforces: "+Score.lifeforces+" / "+level.requiredLifeforces());
 		labelPoints.setText("Points: "+Score.score);
 
 		if (remainingTime > 0.1f) {
-			if (!completed && !failed) {
+			if (!level.isCompleted() && !level.isFailed()) {
 				remainingTime -= Gdx.graphics.getDeltaTime();
 	
 				DecimalFormat sb = new DecimalFormat("#.0");
@@ -89,8 +69,8 @@ public class StageHUD {
 			}
 		} else {
 			labelTime.setText("0.0");
-			failed = true;
-			completed = false;
+			level.setFailed(true);
+			level.setCompleted(false);
 			// TODO Stop Background rotation and lerp of color
 			// TODO Disable camera-rotation
 		}

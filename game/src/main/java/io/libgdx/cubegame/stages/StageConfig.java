@@ -17,13 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.blocks.factories.TextureFactory;
-import io.libgdx.cubegame.screens.GameScreen;
 import io.libgdx.cubegame.screens.MenuScreen;
 
 public class StageConfig {
 	private Stage stage;
 	
-	public StageConfig(GameScreen cubeApp) {
+	public StageConfig() {
 		stage = new Stage();
 		
 	    String fName = "/cubegame/font/rocketfuel.ttf";

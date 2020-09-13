@@ -18,7 +18,7 @@ import io.libgdx.cubegame.screens.GameScreen;
 import io.libgdx.cubegame.blocks.Arrow;
 
 /** Generated from level1.yaml with io.libgdx.cubegame.levels.yaml.YAMLLevelFromDSL - do not modify! */
-public class YAMLLevel1 implements Level {
+public class YAMLLevel1 extends Level {
 	private Player player;
 	private Block[][][] field;
 	private GameScreen cubeApp;

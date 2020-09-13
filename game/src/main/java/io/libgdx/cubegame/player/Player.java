@@ -41,12 +41,12 @@ public class Player extends Block {
 	public Color top = Color.GREEN;
 	public Color back = Color.CYAN;
 
-	// From warpstrone-libgdx-mashup-master
+	// Idea from warpstrone-libgdx-mashup-master
 	private float lightPosition = 0;
-	public Vector3 lightCenter = new Vector3(3f, 3f, 3f);
-	public float radiusA = 1f;
-	public float radiusB = 1f;
-	PointLight pointLight; 
+	private Vector3 lightCenter = new Vector3(3f, 3f, 3f);
+	private float radiusA = 1f;
+	private float radiusB = 1f;
+	private PointLight pointLight; 
 
 	public Player() {
 		// TODO Player refactor to remove texture... override from createCube...

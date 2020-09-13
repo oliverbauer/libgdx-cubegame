@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 import io.libgdx.cubegame.CubeGame;
 import io.libgdx.cubegame.assets.Assets;
+import io.libgdx.cubegame.levels.Level;
 import io.libgdx.cubegame.screens.GameScreen;
 import io.libgdx.cubegame.screens.MenuScreen;
 
@@ -106,9 +107,9 @@ public class StageLevelDialog {
 		return stage;
 	}
 	
-	public void render(boolean failed, boolean completed) {
+	public void render(Level level) {
 		
-		if (failed && !completed) {
+		if (level.isFailed() && !level.isCompleted()) {
 			status.setText("FAILED");
 			table.setTouchable(Touchable.enabled);
 			
@@ -117,7 +118,7 @@ public class StageLevelDialog {
 			
 			stage.act();
 			stage.draw();
-		} else if (!failed && completed) {
+		} else if (!level.isFailed() && level.isCompleted()) {
 			status.setText("SUCCESS");
 			table.setTouchable(Touchable.enabled);
 			

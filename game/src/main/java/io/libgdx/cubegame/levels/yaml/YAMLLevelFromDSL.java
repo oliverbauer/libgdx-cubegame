@@ -76,7 +76,7 @@ public class YAMLLevelFromDSL {
 		generateImports();
 		
 		write("/** Generated from "+input+" with "+YAMLLevelFromDSL.class.getName()+" - do not modify! */");
-		write("public class "+output.substring(0, output.indexOf("."))+" implements Level {"); 
+		write("public class "+output.substring(0, output.indexOf("."))+" extends Level {"); 
 		write("private Player player;", 1);
 		write("private Block[][][] field;", 1);
 		write("private GameScreen cubeApp;",1);

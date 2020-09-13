@@ -189,6 +189,6 @@ public class PlayerController {
 		level.getPlayer().z = z;
 		
 		// collect lifeforce, die, do nothing...
-		level.playerMovedOn(gameScreen, x,y,z);
+		level.playerMovedOn(x,y,z);
 	}
 }

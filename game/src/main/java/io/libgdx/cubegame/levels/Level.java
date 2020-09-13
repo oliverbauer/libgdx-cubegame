@@ -27,7 +27,7 @@ import io.libgdx.cubegame.player.PlayerDirection;
 import io.libgdx.cubegame.score.Score;
 import io.libgdx.cubegame.screens.GameScreen;
 
-public interface Level {
+public abstract class Level {
 	public Logger logger = LoggerFactory.getLogger(Level.class);
 	Date lastNotAllowed = new Date();
 	Date lastSpawnLifeforce = new Date();
@@ -35,42 +35,62 @@ public interface Level {
 	long seed = 4711;
 	Random r = new Random(seed);
 	public LifeforcePos lifeforcePos = new LifeforcePos();
+	
+	boolean completed = false;
+	boolean failed = false;
+	
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	public boolean isFailed() {
+		return failed;
+	}
+
+	public void setFailed(boolean failed) {
+		this.failed = failed;
+	}
+
 
 	/**
 	 * Used for spawning lifeforces...
 	 */
 	final List<Vector3> stones = new ArrayList<>();
 	
-	default float getTimeLimit() {
+	public float getTimeLimit() {
 		return 100;
 	}
 	
-	default int requiredLifeforces() {
+	public int requiredLifeforces() {
 		return 3;
 	}
 	
-	public Block[][][] field();
+	public abstract Block[][][] field();
 	
-	public Player getPlayer();
+	public abstract Player getPlayer();
 
-	default int xlength() {
+	public int xlength() {
 		return 10;
 	}
-	default int ylength() {
+	public int ylength() {
 		return 10;
 	}
-	default int zlength() {
+	public int zlength() {
 		return 10;
 	}
 	
-	default void cameraUpdate(Camera cam) {
+	public void cameraUpdate(Camera cam) {
 		if (Config.followPlayer) {
 			cameraFollowsCube(cam);
 			cam.lookAt(xlength(), getPlayer().y	-5,	ylength()/2);
 		}
 	}
 	
-	default void updateAnimatedBlocks() {
+	public void updateAnimatedBlocks() {
 		for (int i = 0; i < xlength(); i++) {
 			for (int j = 0; j < ylength(); j++) {
 				for (int k = 0; k < zlength(); k++) {
@@ -84,7 +104,7 @@ public interface Level {
 	}
 	
 	// https://stackoverflow.com/questions/24047172/libgdx-camera-smooth-translation
-	default void cameraFollowsCube(Camera cam, int x, int y, int z) {
+	public void cameraFollowsCube(Camera cam, int x, int y, int z) {
 		Vector3 p = new Vector3();
 		p.x = getPlayer().x + x;
 		p.y = getPlayer().y + y;
@@ -100,11 +120,11 @@ public interface Level {
 		cam.update();
 	}
 	
-	default void cameraFollowsCube(Camera cam) {
+	public void cameraFollowsCube(Camera cam) {
 		cameraFollowsCube(cam, -7, 2, -3);
 	}
 	
-	default void renderLevel(ModelBatch modelBatch, Environment environment) {
+	public void renderLevel(ModelBatch modelBatch, Environment environment) {
 		for (int i = 0; i < xlength(); i++) {
 			for (int j = 0; j < ylength(); j++) {
 				for (int k = 0; k < zlength(); k++) {
@@ -116,7 +136,7 @@ public interface Level {
 		}
 	}
 
-	default boolean allowed(PlayerDirection direction) {
+	public boolean allowed(PlayerDirection direction) {
 		int x = getPlayer().x;
 		int y = getPlayer().y;
 		int z = getPlayer().z;
@@ -359,7 +379,7 @@ public interface Level {
 	 * @param y
 	 * @param z
 	 */
-	default void playerMovedOn(GameScreen cubeApp, int x, int y, int z) {
+	public void playerMovedOn(int x, int y, int z) {
 		if (getPlayer().isMoving) {
 			return;
 		}
@@ -389,7 +409,7 @@ public interface Level {
 					
 					Score.lifeforces++;
 					if (Score.lifeforces >= requiredLifeforces()) {
-						cubeApp.setCompleted();
+						setCompleted(true);
 					}
 				}
 				
@@ -517,7 +537,7 @@ public interface Level {
 		}
 	}
 	
-	default void dispose() {
+	public void dispose() {
 		for (int i = 0; i < xlength(); i++) {
 			for (int j = 0; j < ylength(); j++) {
 				for (int k = 0; k < zlength(); k++) {
@@ -529,7 +549,7 @@ public interface Level {
 		}
 	}
 	
-	default void translateAllBlocks() {
+	public void translateAllBlocks() {
 		stones.clear();
 		lifeforcePos.x = 0;
 		lifeforcePos.y = 0;
@@ -551,7 +571,7 @@ public interface Level {
 		}
 	}
 	
-	default void playNotAllowedEffect() {
+	public void playNotAllowedEffect() {
 		if (System.currentTimeMillis() - lastNotAllowed.getTime() > 1000) {
 			if (Assets.instance().soundMovementNotAllowed != null) {
 				Assets.instance().soundMovementNotAllowed.play();
@@ -571,7 +591,7 @@ public interface Level {
 	}
 	
 	
-	default void spawnBlocks() {
+	public void spawnBlocks() {
 		if (System.currentTimeMillis() - lastSpawnLifeforce.getTime() > 4000 && !lifeforcePos.avail(field())) {
 			lastSpawnLifeforce.setTime(System.currentTimeMillis());
 			Vector3 pos = stones.get(r.nextInt(stones.size()));

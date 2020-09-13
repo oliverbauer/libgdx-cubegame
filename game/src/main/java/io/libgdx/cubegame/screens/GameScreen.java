@@ -70,7 +70,7 @@ public class GameScreen implements Screen {
 
 		keyboard = new Keyboard(level);
 
-		stageConfig = new StageConfig(this);
+		stageConfig = new StageConfig();
 		
 		InputMultiplexer inputMultiplexer = new InputMultiplexer() {
 			@Override
@@ -113,7 +113,7 @@ public class GameScreen implements Screen {
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
-		if (!stageHUD.isFailed() && !stageHUD.isCompleted()) {
+		if (!level.isFailed() && !level.isCompleted()) {
 			float dR = (Gdx.input.isKeyPressed(Keys.Q) ? -1 : 0) + (Gdx.input.isKeyPressed(Keys.E) ? 1 : 0);
 			float rotateSpeed = 1;
 			perspectiveCamera.rotate(perspectiveCamera.direction, dR * rotateSpeed);
@@ -127,14 +127,14 @@ public class GameScreen implements Screen {
 		}
 		
 		level.cameraUpdate(perspectiveCamera);
-		if (!stageHUD.isFailed() && !stageHUD.isCompleted()) {
+		if (!level.isFailed() && !level.isCompleted()) {
 			level.updateAnimatedBlocks();
 		}
 		
 		/**
 		 * If the player hasn't been moved with W/A/S/D for 5 seconds, jump ;-)
 		 */
-		if (System.currentTimeMillis() - keyboard.lastWASD > 5000 && !stageHUD.isFailed() && !stageHUD.isCompleted()) {
+		if (System.currentTimeMillis() - keyboard.lastWASD > 5000 && !level.isFailed() && !level.isCompleted()) {
 			keyboard.lastWASD = System.currentTimeMillis();
 
 			int x = level.getPlayer().x;
@@ -156,7 +156,7 @@ public class GameScreen implements Screen {
 		}
 		
 		level.renderLevel(modelBatch, environment);
-		if (!stageHUD.isFailed() && !stageHUD.isCompleted()) {
+		if (!level.isFailed() && !level.isCompleted()) {
 			level.spawnBlocks();
 		}
 		modelBatch.end();
@@ -166,19 +166,19 @@ public class GameScreen implements Screen {
 
 		stageHUD.render(level);
 		
-		stageLevelDialog.render(stageHUD.isFailed(), stageHUD.isCompleted());
+		stageLevelDialog.render(level);
 
-		if (!stageHUD.isFailed() && !stageHUD.isCompleted()) {
+		if (!level.isFailed() && !level.isCompleted()) {
 			playerController.playerMovement(keyboard.getNextDirection());
 		}
 	}
 
 	public void setCompleted() {
-		stageHUD.setCompleted(true);
+		level.setCompleted(true);
 	}
 	
 	public void setFailed(boolean value) {
-		stageHUD.setFailed(value);
+		level.setFailed(value);
 	}
 
 	public void retry() {
