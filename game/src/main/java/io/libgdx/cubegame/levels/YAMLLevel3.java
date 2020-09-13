@@ -114,12 +114,34 @@ public class YAMLLevel3 extends Level {
 		arrow2.end   = new Vector3(4, 0, 0);
 		field()[4][5][0] = arrow2;
 		field()[4][3][0] = BlockFactory.createElevator(BlockType.ELEVATOR_DOWN, 4, 3, 0);
+		field()[4][3][1] = BlockFactory.createGround(4, 3, 1);
+		field()[4][3][2] = BlockFactory.createGround(4, 3, 2);
+		field()[4][3][3] = BlockFactory.createGround(4, 3, 3);
+		field()[4][3][4] = BlockFactory.createGround(4, 3, 4);
+		field()[4][3][5] = BlockFactory.createGround(4, 3, 5);
+		field()[4][3][6] = BlockFactory.createGround(4, 3, 6);
+		field()[4][3][7] = BlockFactory.createGround(4, 3, 7);
+		field()[4][3][8] = BlockFactory.createGround(4, 3, 8);
+		field()[4][3][9] = BlockFactory.createGround(4, 3, 9);
 		field()[4][3][10] = BlockFactory.createGround(4, 3, 10);
 		field()[3][3][0] = BlockFactory.createGround(3, 3, 0);
+		field()[3][3][1] = BlockFactory.createGround(3, 3, 1);
+		field()[3][3][9] = BlockFactory.createGround(3, 3, 9);
 		field()[3][3][10] = BlockFactory.createGround(3, 3, 10);
 		field()[2][3][0] = BlockFactory.createGround(2, 3, 0);
+		field()[2][3][1] = BlockFactory.createGround(2, 3, 1);
+		field()[2][3][9] = BlockFactory.createGround(2, 3, 9);
 		field()[2][3][10] = BlockFactory.createGround(2, 3, 10);
 		field()[1][3][0] = BlockFactory.createGround(1, 3, 0);
+		field()[1][3][1] = BlockFactory.createGround(1, 3, 1);
+		field()[1][3][2] = BlockFactory.createGround(1, 3, 2);
+		field()[1][3][3] = BlockFactory.createGround(1, 3, 3);
+		field()[1][3][4] = BlockFactory.createGround(1, 3, 4);
+		field()[1][3][5] = BlockFactory.createGround(1, 3, 5);
+		field()[1][3][6] = BlockFactory.createGround(1, 3, 6);
+		field()[1][3][7] = BlockFactory.createGround(1, 3, 7);
+		field()[1][3][8] = BlockFactory.createGround(1, 3, 8);
+		field()[1][3][9] = BlockFactory.createGround(1, 3, 9);
 		field()[1][3][10] = BlockFactory.createGround(1, 3, 10);
 		field()[0][3][0] = BlockFactory.createGround(0, 3, 0);
 		field()[0][3][1] = BlockFactory.createGround(0, 3, 1);
@@ -148,7 +170,7 @@ public class YAMLLevel3 extends Level {
 				break;
 			case VERY_HARD:
 				enemyPath1(Color.BLACK);
-				enemyPath2(Color.WHITE);
+				enemyPath2(Color.RED);
 		}
 
 		player = new Player();

@@ -154,7 +154,7 @@ public class YAMLLevel2 extends Level {
 				break;
 			case VERY_HARD:
 				enemyPath1(Color.BLACK);
-				enemyPath2(Color.WHITE);
+				enemyPath2(Color.RED);
 		}
 
 		player = new Player();

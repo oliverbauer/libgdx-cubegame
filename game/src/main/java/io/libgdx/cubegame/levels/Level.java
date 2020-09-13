@@ -592,7 +592,7 @@ public abstract class Level {
 	
 	
 	public void spawnBlocks() {
-		if (System.currentTimeMillis() - lastSpawnLifeforce.getTime() > 4000 && !lifeforcePos.avail(field())) {
+		if (System.currentTimeMillis() - lastSpawnLifeforce.getTime() > 1000 && !lifeforcePos.avail(field())) {
 			lastSpawnLifeforce.setTime(System.currentTimeMillis());
 			Vector3 pos = stones.get(r.nextInt(stones.size()));
 			

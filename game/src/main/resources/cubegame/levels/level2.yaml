@@ -1,5 +1,3 @@
-# Fields will be on y=0 layer [xlength=6, zlength=11], ylength will be 2 [one for the field [y=0] and one for the player [y=1]
-# ylength will be "computed"
 fields:
   - 0: [ 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0]
   - 0: [ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]
@@ -31,7 +29,7 @@ difficulties:
       - path: 1
         color: "BLACK"
       - path: 2
-        color: "WHITE"
+        color: "RED"
 
 # path 0 only on two x values (inner path)
 # path 1: only on the lower x value (lower path)

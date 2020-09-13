@@ -32,6 +32,7 @@ public class YAMLLevelFromDSL {
 		new YAMLLevelFromDSL().generateFromTo("level1.yaml", "YAMLLevel1.java");
 		new YAMLLevelFromDSL().generateFromTo("level2.yaml", "YAMLLevel2.java");
 		new YAMLLevelFromDSL().generateFromTo("level3.yaml", "YAMLLevel3.java");
+		new YAMLLevelFromDSL().generateFromTo("level4.yaml", "YAMLLevel4.java");
 	}
 	
 	private BufferedWriter bufferedWriter;
@@ -233,46 +234,48 @@ public class YAMLLevelFromDSL {
 		write("");
 
 		List<YAMLPath> path2 = yamlLevel.getPath();
-		for (int pRef=0; pRef<=path2.size()-1; pRef++) {
-			String vectors = path2.get(pRef).getVectors();
+		if (path2 != null) {
+			for (int pRef=0; pRef<=path2.size()-1; pRef++) {
+				String vectors = path2.get(pRef).getVectors();
+					
+				write("public void enemyPath"+ pRef + "(Color color) {",1);
 				
-			write("public void enemyPath"+ pRef + "(Color color) {",1);
-			
-			String parts[] = vectors.split("\\),\\(");
-			
-			String first = parts[0].replace("(", "").replace(")", "");
-			String second = parts[1].replace("(", "").replace(")", "");
-			
-			String x1 = first.split(",")[0];
-			Integer y1 = Integer.parseInt(first.split(",")[1]);
-			String z1 = first.split(",")[2];
-
-			
-			String x2 = second.split(",")[0];
-			String y2 = second.split(",")[1];
-			String z2 = second.split(",")[2];
-
-			write("field()["+x1+"]["+(y1+1)+"]["+z1+"] = BlockFactory.createEnemy(color, "+x1+","+(y1+1)+","+z1+");",2);// hackish workaround
-			
-			write("EnemyAnimation r = new EnemyAnimation(cubeApp);",2);
-			write("r.start = new Vector3("+x1+","+y1+","+z1+");",2);
-			write("r.end = new Vector3("+x2+", "+y2+", "+z2+");",2);
-			write("r.field = field;",2);
-			write("List<Vector3> vecs = new ArrayList<>();",2);
-			
-			for (int k=2; k<=parts.length-1; k++) {
-				String xa = parts[k].split(",")[0].replace("(", "").replace(")", "");
-				String ya = parts[k].split(",")[1].replace("(", "").replace(")", "");
-				String za = parts[k].split(",")[2].replace("(", "").replace(")", "");
-				write("vecs.add(new Vector3("+xa+", "+ya+", "+za+"));",2);
+				String parts[] = vectors.split("\\),\\(");
 				
+				String first = parts[0].replace("(", "").replace(")", "");
+				String second = parts[1].replace("(", "").replace(")", "");
+				
+				String x1 = first.split(",")[0];
+				Integer y1 = Integer.parseInt(first.split(",")[1]);
+				String z1 = first.split(",")[2];
+	
+				
+				String x2 = second.split(",")[0];
+				String y2 = second.split(",")[1];
+				String z2 = second.split(",")[2];
+	
+				write("field()["+x1+"]["+(y1+1)+"]["+z1+"] = BlockFactory.createEnemy(color, "+x1+","+(y1+1)+","+z1+");",2);// hackish workaround
+				
+				write("EnemyAnimation r = new EnemyAnimation(cubeApp);",2);
+				write("r.start = new Vector3("+x1+","+y1+","+z1+");",2);
+				write("r.end = new Vector3("+x2+", "+y2+", "+z2+");",2);
+				write("r.field = field;",2);
+				write("List<Vector3> vecs = new ArrayList<>();",2);
+				
+				for (int k=2; k<=parts.length-1; k++) {
+					String xa = parts[k].split(",")[0].replace("(", "").replace(")", "");
+					String ya = parts[k].split(",")[1].replace("(", "").replace(")", "");
+					String za = parts[k].split(",")[2].replace("(", "").replace(")", "");
+					write("vecs.add(new Vector3("+xa+", "+ya+", "+za+"));",2);
+					
+				}
+				
+				write("for (Vector3 v : vecs)",2);
+				write("r.add(v);",3);
+				write("field()["+x1+"]["+(y1+1)+"]["+z1+"].anim = r;",2); // hackish workaround
+				write("}",1);
+				write("");
 			}
-			
-			write("for (Vector3 v : vecs)",2);
-			write("r.add(v);",3);
-			write("field()["+x1+"]["+(y1+1)+"]["+z1+"].anim = r;",2); // hackish workaround
-			write("}",1);
-			write("");
 		}
 	
 		generateMethodGetPlayer();

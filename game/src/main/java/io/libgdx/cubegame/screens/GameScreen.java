@@ -27,6 +27,7 @@ import io.libgdx.cubegame.levels.Level;
 import io.libgdx.cubegame.levels.YAMLLevel1;
 import io.libgdx.cubegame.levels.YAMLLevel2;
 import io.libgdx.cubegame.levels.YAMLLevel3;
+import io.libgdx.cubegame.levels.YAMLLevel4;
 import io.libgdx.cubegame.player.PlayerController;
 import io.libgdx.cubegame.stages.StageConfig;
 import io.libgdx.cubegame.stages.StageHUD;
@@ -190,6 +191,8 @@ public class GameScreen implements Screen {
 			level = new YAMLLevel2(this, perspectiveCamera);
 		} else if (level instanceof YAMLLevel3) {
 			level = new YAMLLevel3(this, perspectiveCamera);
+		} else if (level instanceof YAMLLevel4) {
+			level = new YAMLLevel4(this, perspectiveCamera);
 		}
 		updateLevel();
 	}
@@ -201,7 +204,9 @@ public class GameScreen implements Screen {
 		} else if (level instanceof YAMLLevel2) {
 			level = new YAMLLevel3(this, perspectiveCamera);
 		} else if (level instanceof YAMLLevel3) {
-			level = new YAMLLevel3(this, perspectiveCamera); // TODO Add more levels
+			level = new YAMLLevel4(this, perspectiveCamera);
+		} else if (level instanceof YAMLLevel4) {
+			level = new YAMLLevel4(this, perspectiveCamera); // TODO Add more levels
 		}
 		updateLevel();
 	}
