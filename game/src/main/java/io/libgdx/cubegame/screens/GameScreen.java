@@ -39,7 +39,6 @@ public class GameScreen implements Screen {
 	private PerspectiveCamera perspectiveCamera;
 	private CameraInputController camController;
 	private ModelInstance gridInstance;
-	private ModelInstance line;
 
 	private Keyboard keyboard;
 	private Level level;
@@ -60,7 +59,7 @@ public class GameScreen implements Screen {
 		modelBatch = new ModelBatch();
 
 		
-		perspectiveCamera = new PerspectiveCamera(100, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		perspectiveCamera = new PerspectiveCamera(90, 1,1);
 		level = new YAMLLevel1(this, perspectiveCamera);
 				
 		updateCamera();
@@ -126,7 +125,6 @@ public class GameScreen implements Screen {
 		if (gridInstance != null && Config.showGrid) {
 			modelBatch.render(gridInstance, environment);
 		}
-		modelBatch.render(line, environment);
 		
 		level.cameraUpdate(perspectiveCamera);
 		if (!level.isFailed() && !level.isCompleted()) {
@@ -225,22 +223,17 @@ public class GameScreen implements Screen {
 	}
 	
 	private void updateCamera() {
-		int lookatX = level.xlength()/2;
-		int lookatY = -5;
-		int lookatZ = level.zlength()/2;
-		perspectiveCamera.lookAt(lookatX, lookatY, lookatZ);
-		int camX = 0;
+		int camX = -level.xlength()/2;
 		int camY = 8;
-		int camZ = 0;//level.zlength()/2;//0;
+		int camZ = level.zlength()/2;
 		perspectiveCamera.position.set(camX, camY, camZ);
 		
-//		perspectiveCamera.rotate(perspectiveCamera.direction, -40);
+		int lookatX = level.xlength()/2;
+		int lookatY = 0;
+		int lookatZ = level.zlength()/2;
+		perspectiveCamera.lookAt(lookatX, lookatY, lookatZ);
 		
 		perspectiveCamera.update();
-		
-		line = new ModelInstance(Grid.createLine(
-				camX, camY, camZ,
-				lookatX, lookatY, lookatZ));
 	}
 
 	@Override
