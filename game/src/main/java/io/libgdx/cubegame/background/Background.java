@@ -34,11 +34,15 @@ public class Background {
 	}
 	
 	public void render() {
-		if (Config.useTextureAsBackground) {
-			imageBackground.render();
-		} else {
-			mySceneManager.update(Gdx.graphics.getDeltaTime());
-			mySceneManager.render();
+		switch (Config.backgroundType) {
+			case TEXTURE:
+				imageBackground.render();
+				break;
+			case CUBEMAP:
+				mySceneManager.update(Gdx.graphics.getDeltaTime());
+				mySceneManager.render();
+				break;
+			case NONE:
 		}
 	}
 }

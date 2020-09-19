@@ -23,6 +23,7 @@ import io.libgdx.cubegame.CubeGame;
 import io.libgdx.cubegame.assets.Assets;
 import io.libgdx.cubegame.blocks.factories.TextureFactory;
 import io.libgdx.cubegame.levels.Difficulty;
+import io.libgdx.cubegame.stages.actors.TextureActor;
 
 public class MenuScreen implements Screen {
 	private Stage stage;
@@ -64,13 +65,13 @@ public class MenuScreen implements Screen {
 
 		
 		
-		final DifficultyActor difficulties[] = new DifficultyActor[Difficulty.values().length];
+		final TextureActor difficulties[] = new TextureActor[Difficulty.values().length];
 		font = font.deriveFont(Font.BOLD, 20f);
 		for (int i=0; i<=Difficulty.values().length-1; i++) {
 			final Texture img2 = TextureFactory.createTexture(width, height, Difficulty.values()[i].name(), font, Color.BLACK, Color.RED);
 			img2.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 
-			difficulties[i] = new DifficultyActor(img2, 150, 50);
+			difficulties[i] = new TextureActor(img2, 150, 50);
 
 			difficulties[i].setPosition(
 				Gdx.graphics.getWidth() / 2 - width/2 - 330 + i*180, 
@@ -118,25 +119,6 @@ public class MenuScreen implements Screen {
 		stage.act(delta);
 		stage.draw();
 	}
-
-	private class DifficultyActor extends Actor {
-		private final Texture mTexture;
-		
-		public DifficultyActor(Texture tex, int width, int height) {
-			mTexture = tex;
-			setSize(width, height);
-		}
-		
-		@Override
-		public void draw(Batch batch, float parentAlpha) {
-			batch.setColor(getColor());
-			batch.draw(mTexture, getX(), getY(), getOriginX(), getOriginY(),
-					getWidth(), getHeight(), getScaleX(), getScaleY(),
-					getRotation(), 0, 0, mTexture.getWidth(),
-					mTexture.getHeight(), false, false);
-		}
-	}
-
 	
 	private class StartGameButtonActor extends Actor {
 		private final Texture mTexture;

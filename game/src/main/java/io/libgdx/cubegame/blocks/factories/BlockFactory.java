@@ -14,7 +14,7 @@ import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
 
 public class BlockFactory {
-	private static final Color groundColor = Color.BLUE;
+	private static final Color groundColor = Color.BLACK;
 	
 	private static final BlendingAttribute blendingAttribute = new BlendingAttribute(.9f);
 	

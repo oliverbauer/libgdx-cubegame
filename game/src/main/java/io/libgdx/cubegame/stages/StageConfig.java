@@ -9,8 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -18,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.blocks.factories.TextureFactory;
 import io.libgdx.cubegame.screens.MenuScreen;
+import io.libgdx.cubegame.stages.actors.TextureActor;
 
 public class StageConfig {
 	private Stage stage;
@@ -84,26 +83,5 @@ public class StageConfig {
 	
 	public Stage getStage() {
 		return stage;
-	}
-	
-	/**
-	 * TODO Same as in MenuScreen
-	 */
-	private class TextureActor extends Actor {
-		private final Texture mTexture;
-		
-		public TextureActor(Texture tex, int width, int height) {
-			mTexture = tex;
-			setSize(width, height);
-		}
-		
-		@Override
-		public void draw(Batch batch, float parentAlpha) {
-			batch.setColor(getColor());
-			batch.draw(mTexture, getX(), getY(), getOriginX(), getOriginY(),
-					getWidth(), getHeight(), getScaleX(), getScaleY(),
-					getRotation(), 0, 0, mTexture.getWidth(),
-					mTexture.getHeight(), false, false);
-		}
 	}
 }

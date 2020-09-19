@@ -10,5 +10,10 @@ public class Config {
 	public static boolean showGrid = false;
 	public static boolean followPlayer = false;
 	
-	public static boolean useTextureAsBackground = true; // TODO Enum: CubeMap(String path), Static(String imagefile), None(String backgroundColor)
+	public enum Background_Type {
+		TEXTURE,
+		CUBEMAP,
+		NONE
+	}
+	public static Background_Type backgroundType = Background_Type.NONE;
 }
