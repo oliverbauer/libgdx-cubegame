@@ -21,6 +21,7 @@ import io.libgdx.cubegame.blocks.types.TileElevator.ElevatorDirection;
 import io.libgdx.cubegame.blocks.types.TileJumper;
 import io.libgdx.cubegame.blocks.types.TileLifeforce;
 import io.libgdx.cubegame.blocks.types.TilePoint;
+import io.libgdx.cubegame.blocks.types.TileTrappingDoor;
 import io.libgdx.cubegame.blocks.types.TileJumper.JumpDirection;
 
 public class TileFactory {
@@ -83,6 +84,19 @@ public class TileFactory {
 		return block;
 	}
 
+	
+	/**
+	 * Only for lifeforces!
+	 */
+	public static Block createTileTrappingDoor(Color color, int x, int y, int z) {
+		TileTrappingDoor block =  new TileTrappingDoor(color);
+		block.color = color;
+		block.x = x;
+		block.y = y;
+		block.z = z;
+		block.setPosition(x, y, z);
+		return block;
+	}
 	
 	/**
 	 * Only for lifeforces!

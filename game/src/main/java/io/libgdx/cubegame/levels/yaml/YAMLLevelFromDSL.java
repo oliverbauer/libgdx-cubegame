@@ -17,7 +17,10 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.animation.EnemyAnimation;
+import io.libgdx.cubegame.blocks.Arrow;
+import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
+import io.libgdx.cubegame.blocks.factories.TileFactory;
 import io.libgdx.cubegame.blocks.types.TileElevator.ElevatorDirection;
 import io.libgdx.cubegame.blocks.types.TileJumper.JumpDirection;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLDifficulties;
@@ -25,6 +28,9 @@ import io.libgdx.cubegame.levels.yaml.definitions.YAMLDifficulty;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLEnemy;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLLevel;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLPath;
+import io.libgdx.cubegame.player.Player;
+import io.libgdx.cubegame.score.Score;
+import io.libgdx.cubegame.screens.GameScreen;
 
 /**
  * TODO YAML: Create Groovy Level.file
@@ -414,20 +420,18 @@ public class YAMLLevelFromDSL {
 		write("import com.badlogic.gdx.graphics.PerspectiveCamera;");
 		write("import com.badlogic.gdx.graphics.Texture;");
 		write("import com.badlogic.gdx.math.Vector3;");
-
-		
 		
 		write("import "+Config.class.getName()+";");
 		write("import "+EnemyAnimation.class.getName()+";");
 		write("import "+ElevatorDirection.class.getName().replace("$", ".")+";"); // inner class
 		write("import "+JumpDirection.class.getName().replace("$", ".")+";"); // inner class
-		write("import io.libgdx.cubegame.blocks.Block;");
-		write("import io.libgdx.cubegame.blocks.BlockType;");
-		write("import io.libgdx.cubegame.blocks.factories.TileFactory;");
-		write("import io.libgdx.cubegame.player.Player;");
-		write("import io.libgdx.cubegame.score.Score;");
-		write("import io.libgdx.cubegame.screens.GameScreen;");
-		write("import io.libgdx.cubegame.blocks.Arrow;");
+		write("import "+Block.class.getName()+";");
+		write("import "+BlockType.class.getName()+";");
+		write("import "+TileFactory.class.getName()+";");
+		write("import "+Player.class.getName()+";");
+		write("import "+Score.class.getName()+";");
+		write("import "+GameScreen.class.getName()+";");
+		write("import "+Arrow.class.getName()+";");
 		
 		write("");
 	}

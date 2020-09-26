@@ -161,7 +161,7 @@ public abstract class Level {
 				break;
 		}
 		// Check level-bounds
-		if (targetX >= 0 || targetX <=xlength() - 1 || targetZ >=0 || targetZ <= zlength() - 1) {
+		if (targetX >= 0 && targetX <=xlength() - 1 && targetZ >=0 && targetZ <= zlength() - 1) {
 			// potentially allowed
 		} else {
 			return false;

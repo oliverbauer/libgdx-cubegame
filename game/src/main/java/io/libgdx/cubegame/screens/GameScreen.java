@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
 
 		
 		perspectiveCamera = new PerspectiveCamera(90, 1,1);
-		level = new YAMLLevel3(this, perspectiveCamera);
+		level = new YAMLLevel1(this, perspectiveCamera);
 				
 		updateCamera();
 		

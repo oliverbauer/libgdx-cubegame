@@ -37,7 +37,7 @@ public class YAMLLevel1 extends Level {
 		field()[5][0][6] = TileFactory.createGround(5, 0, 6);
 		field()[5][0][7] = TileFactory.createGround(5, 0, 7);
 		field()[5][0][8] = TileFactory.createGround(5, 0, 8);
-		field()[4][0][1] = TileFactory.createGround(4, 0, 1);
+		field()[4][0][1] = TileFactory.createTileTrappingDoor(Color.BLUE, 4, 0, 1);
 		field()[4][0][2] = TileFactory.createGround(4, 0, 2);
 		field()[4][0][3] = TileFactory.createGround(4, 0, 3);
 		field()[4][0][4] = TileFactory.createGround(4, 0, 4);
