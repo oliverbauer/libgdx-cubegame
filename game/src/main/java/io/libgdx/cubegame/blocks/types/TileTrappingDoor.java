@@ -3,24 +3,23 @@ package io.libgdx.cubegame.blocks.types;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
+import io.libgdx.cubegame.animation.Animation;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.factories.CubeCornerResult;
 import io.libgdx.cubegame.levels.Level;
 import io.libgdx.cubegame.player.Player;
 import io.libgdx.cubegame.player.PlayerDirection;
 
-/**
- * Opens/closes a trap door on a different position
- */
-
 public class TileTrappingDoor extends Block {
-	List<java.awt.Color> awtcolors;
+	private List<java.awt.Color> awtcolors;
+	
 	public TileTrappingDoor(Color c) {
 		this.color = c;
 		
@@ -51,13 +50,81 @@ public class TileTrappingDoor extends Block {
 	}
 	
 	@Override
+	public void enemyMovedOn(Level level) {
+		playerMovedOn(level); // identical
+	}
+
+	private boolean isClosed = true;
+	
+	@Override
 	public void playerMovedOn(Level level) {
-		// TODO Use Block.anim
-		// TODO Make configurable
-		// TODO Allow multiple positions
-		// TODO Use +90 (open) saand -90 (close again)
-		level.field()[x][y][z+3].getInstance().transform.rotate(Vector3.X, 90);
-		super.playerMovedOn(level);
+		// TODO Allow multiple positions and make positions configurable
+		// TODO Player/enemy should die of trap is open...
+		
+		if (isClosed) {
+			// open
+			level.field()[x][y][z+3].anim = new Animation() {
+				private float alpha = 0;
+				private float speed = 1f;
+				private float fromAngle = 0;
+				private float toAngle = 90;
+				
+				@Override
+				public void update(Block block) {
+					final float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
+					alpha += delta * speed;
+					
+					if (alpha > 1) {
+						block.anim = null;
+						return;
+					}
+					
+					float angle = fromAngle + alpha * (toAngle - fromAngle);
+					
+					Vector3 tmpV = new Vector3();
+					tmpV.set(
+						new Vector3(x, y, z+3)
+					).lerp(
+						new Vector3(x, y - 0.5f, z+3 - 0.5f),
+						alpha);
+				
+					block.getInstance().transform.setToRotation(Vector3.X, angle);
+					block.getInstance().transform.setTranslation(tmpV);					
+				}
+			};
+		} else {
+			// close animation
+			level.field()[x][y][z+3].anim = new Animation() {
+				private float alpha = 0;
+				private float speed = 1f;
+				private float fromAngle = 90;
+				private float toAngle = 0;
+				
+				@Override
+				public void update(Block block) {
+					final float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
+					alpha += delta * speed;
+					
+					if (alpha > 1) {
+						block.anim = null;
+						return;
+					}
+					
+					float angle = fromAngle + alpha * (toAngle - fromAngle);
+					
+					Vector3 tmpV = new Vector3();
+					tmpV.set(
+						new Vector3(x, y - 0.5f, z+3 -0.5f)
+					).lerp(
+						new Vector3(x, y, z+3),
+						alpha);
+				
+					block.getInstance().transform.setToRotation(Vector3.X, angle);
+					block.getInstance().transform.setTranslation(tmpV);					
+				}
+			};
+		}
+		isClosed = !isClosed;
 	}
 
 	@Override
