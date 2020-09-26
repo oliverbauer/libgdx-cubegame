@@ -26,7 +26,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 
 import io.libgdx.cubegame.animation.Animation;
+import io.libgdx.cubegame.levels.Level;
 import io.libgdx.cubegame.player.Player;
+import io.libgdx.cubegame.player.PlayerDirection;
 
 public class Block implements Disposable {
 	private Model model;
@@ -40,6 +42,25 @@ public class Block implements Disposable {
 	public Color color;
 	
 	public Animation anim;
+	
+	public void playerMovedOn(Level level) {
+		
+	}
+	
+	public void enemyMovedOn(Level level) {
+		
+	}
+	
+	/**
+	 * Default is true. Tiles need to override if needed (e.g. not allowed to move with red color on blue lifeforce)
+	 * 
+	 * @param player
+	 * @param direction
+	 * @return
+	 */
+	public boolean allowed(Player player, PlayerDirection direction) {
+		return true;
+	}
 	
 	public Vector3 getPosition() {
 		return new Vector3(x, y, z);

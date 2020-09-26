@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.animation.EnemyAnimation;
+import io.libgdx.cubegame.blocks.types.TileElevator.ElevatorDirection;
+import io.libgdx.cubegame.blocks.types.TileJumper.JumpDirection;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.blocks.factories.TileFactory;

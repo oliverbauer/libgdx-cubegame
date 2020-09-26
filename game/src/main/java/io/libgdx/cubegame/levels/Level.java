@@ -22,6 +22,7 @@ import io.libgdx.cubegame.assets.Assets;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.blocks.factories.TileFactory;
+import io.libgdx.cubegame.blocks.types.TileLifeforce;
 import io.libgdx.cubegame.player.Player;
 import io.libgdx.cubegame.player.PlayerDirection;
 import io.libgdx.cubegame.score.Score;
@@ -141,235 +142,53 @@ public abstract class Level {
 		int y = getPlayer().y;
 		int z = getPlayer().z;
 		
+		int targetX = x;
+		int targetY = y;
+		int targetZ = z;
+		
 		switch (direction) {
-		case FORWARD:
-			if (x >= 1) {
-				Block onPos = field()[x-1][y-1][z]; // one layer below
-				
-				if (onPos == null) {
-					logger.info(" null(hole) on {} {} {}", x-1, y-1, z);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-				if (onPos.getType() == BlockType.LIFEFORCE || onPos.getType() == BlockType.POINT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().left;
-					// oldscrool
-					cubeColor = getPlayer().right;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				if (onPos.getType() == BlockType.FORWARD_SHIFT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().right;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				// Only forward on forward-shift allowed 
-				if (onPos.getType() == BlockType.BACKWARD_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.LEFT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.RIGHT_SHIFT) {
-					return false;
-				}				
-				
-				if (onPos.getType() == BlockType.ELEVATOR_UP || onPos.getType() == BlockType.ELEVATOR_DOWN) {
-					return true;
-				}
-				
-				onPos = field()[x-1][y][z]; // same layer
-				// Check for wall
-				if (onPos != null) {
-					logger.info(" wall: {}", onPos);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-			} else {
-				playNotAllowedEffect();
-			}
-			return x >= 1;
-		case BACK:
-			if (x < xlength() - 1) {
-				Block onPos = field()[x+1][y-1][z]; // one layer below
-				
-				if (onPos == null) {
-					logger.info(" null(hole) on {} {} {}", x+1, y-1, z);
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-				if (onPos.getType() == BlockType.LIFEFORCE || onPos.getType() == BlockType.POINT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().right;
-					// oldscrool
-					cubeColor = getPlayer().left;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				
-				if (onPos.getType() == BlockType.BACKWARD_SHIFT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().left;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				// Only backward on backward-shift allowed 
-				if (onPos.getType() == BlockType.FORWARD_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.LEFT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.RIGHT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.ELEVATOR_UP || onPos.getType() == BlockType.ELEVATOR_DOWN) {
-					return true;
-				}
-				
-				onPos = field()[x+1][y][z]; // same layer
-				// Check for wall
-				if (onPos != null) {
-					logger.info(" wall: {}", onPos);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-			} else {
-				playNotAllowedEffect();
-			}
-			
-			return x < xlength() - 1;
-		case LEFT:
-			
-			if (z >= 1) {
-				Block onPos = field()[x][y-1][z-1]; // one layer below
-				
-				if (onPos == null) {
-					logger.info(" null(hole) on {} {} {}", x, y-1, z-1);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-				if (onPos.getType() == BlockType.LIFEFORCE || onPos.getType() == BlockType.POINT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().front;
-					// oldscrool
-					cubeColor = getPlayer().back;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				
-				if (onPos.getType() == BlockType.LEFT_SHIFT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().back;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				// Only left on left-shift allowed 
-				if (onPos.getType() == BlockType.FORWARD_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.RIGHT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.RIGHT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.ELEVATOR_UP || onPos.getType() == BlockType.ELEVATOR_DOWN) {
-					return true;
-				}
-
-				onPos = field()[x][y][z-1]; // same layer
-				// Check for wall
-				if (onPos != null) {
-					logger.info(" wall: {}", onPos);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-			} else {
-				playNotAllowedEffect();
-			}
-			return z >= 1;
-		case RIGHT:
-			
-			if (z < zlength() - 1) {
-				Block onPos = field()[x][y-1][z+1]; // one layer below
-				
-				if (onPos == null) {
-					logger.info(" null(hole) on {} {} {}", x, y-1, z+1);
-					playNotAllowedEffect();
-					
-					return false;
-				}
-				
-				if (onPos.getType() == BlockType.LIFEFORCE || onPos.getType() == BlockType.POINT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().back;
-					// oldscool
-					cubeColor = getPlayer().front;
-					
-					return lifeforceColor.equals(cubeColor);
-				}
-				if (onPos.getType() == BlockType.RIGHT_SHIFT) {
-					Color lifeforceColor = onPos.color;
-					Color cubeColor = getPlayer().back;
-					// oldscool
-					cubeColor = getPlayer().front;
-					
-					boolean equals = lifeforceColor.equals(cubeColor);
-					
-					return equals;
-				}
-				// Only right on right-shift allowed 
-				if (onPos.getType() == BlockType.FORWARD_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.LEFT_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.BACKWARD_SHIFT) {
-					return false;
-				}
-				if (onPos.getType() == BlockType.ELEVATOR_UP || onPos.getType() == BlockType.ELEVATOR_DOWN) {
-					return true;
-				}
-				
-				onPos = field()[x][y][z+1]; // same layer
-				
-				// Check for wall
-				if (onPos != null) {
-					
-					logger.info(" wall: {}", onPos);
-					
-					playNotAllowedEffect();
-					
-					return false;
-				}
-			} else {
-				playNotAllowedEffect();
-			}
-			
-			return z < zlength() - 1;
-		default:
-			return true;
+			case FORWARD:
+				targetX--;
+				break;
+			case BACK:
+				targetX++;
+				break;
+			case LEFT:
+				targetZ--;
+				break;
+			case RIGHT:
+				targetZ++;
+				break;
 		}
+		// Check level-bounds
+		if (targetX >= 0 || targetX <=xlength() - 1 || targetZ >=0 || targetZ <= zlength() - 1) {
+			// potentially allowed
+		} else {
+			return false;
+		}
+		// Check if there exists a tile one layer below
+		Block onPos = field()[targetX][targetY - 1][targetZ];
+		if (onPos == null) {
+			logger.info(" null(hole) on {} {} {}", targetX, targetY-1, targetZ);
+			playNotAllowedEffect();
+			return false;
+		}
+		
+		boolean allowed = onPos.allowed(getPlayer(), direction);
+		if (!allowed) {
+			return allowed;
+		}
+		
+		onPos = field()[targetX][targetY][targetZ];; // same layer as player: maybe a wall?
+
+		if (onPos != null) {
+			logger.info(" wall: {}", onPos);
+			playNotAllowedEffect();
+			return false;
+		}
+		
+		// allowed from same layer && allowed from one layer below
+		return true;
 	}
 	
 	/**
@@ -384,153 +203,7 @@ public abstract class Level {
 			return;
 		}
 		
-		Block onPos = field()[x][y-1][z]; // one layer below
-		
-		if (onPos == null) {
-			logger.error("player moved on {} {} {} but block is null", x, y, z);
-			return;
-		}
-		
-		int nextXShift = -1;
-		int nextZShift = -1;
-		boolean shift = false;
-		switch (onPos.getType()) {
-			case LIFEFORCE:
-			case POINT:
-				field()[x][y-1][z].dispose(); // cleanup last block
-				field()[x][y-1][z] = TileFactory.createGround(x, y-1, z);
-				
-				if (onPos.getType() == BlockType.POINT) {
-					Score.score += 100;
-				} else {
-					if (Assets.instance().soundLifeforce != null) {
-						Assets.instance().soundLifeforce.play();
-					}
-					
-					Score.lifeforces++;
-					if (Score.lifeforces >= requiredLifeforces()) {
-						setCompleted(true);
-					}
-				}
-				
-				break;
-			
-			case RIGHT_SHIFT:
-				nextXShift = 0;
-				nextZShift = 2; // TODO XX_Shift: Configurable how many stones will be jumped over...
-				shift = true;
-				break;
-			case LEFT_SHIFT:
-				nextXShift = 0;
-				nextZShift = -2;
-				shift = true;
-				break;
-			case BACKWARD_SHIFT:
-				nextXShift = 2;
-				nextZShift = 0;
-				shift = true;
-				break;
-			case FORWARD_SHIFT:
-				nextXShift = -2;
-				nextZShift = 0;
-				shift = true;
-				break;
-				
-			case WALL:
-				throw new RuntimeException("Not allowed to move on a wall");
-			case ELEVATOR_UP:
-				
-				field()[x][y][z] = null;
-				
-				field()[x][y][z] = getPlayer();
-				
-				int nextY = y+1;
-				while (true) {
-					if (field()[x][nextY][z] != null && field()[x][nextY][z].getType().equals(BlockType.GROUND)) {
-						nextY++;
-						break;
-					}
-					nextY++;
-				}
-				
-				field()[x][y][z].setPosition(x, nextY, z);
-				field()[x][y][z].x = x;
-				field()[x][y][z].y = nextY; 
-				field()[x][y][z].z = z;
-				
-				getPlayer().x = x;
-				getPlayer().y = nextY;
-				getPlayer().z = z;
-				
-				// Animation
-				getPlayer().anim = new PlayerAnimation(
-					Arrays.asList(
-						new Vector3(x, y + Player.yOffset, z),
-						new Vector3(x, y+(nextY-y)/2 + Player.yOffset, z),
-						new Vector3(x, nextY + Player.yOffset, z)
-					)
-				);
-
-				break;
-			case ELEVATOR_DOWN:
-				
-				field()[x][y][z] = null;
-				
-				field()[x][y][z] = getPlayer();
-				
-				int nextY2 = y-1;
-				while (true) {
-					if (field()[x][nextY2][z] != null && field()[x][nextY2][z].getType().equals(BlockType.GROUND)) {
-						nextY2++;
-						break;
-					}
-					nextY2--;
-				}
-				
-				
-				field()[x][y][z].setPosition(x, nextY2, z);
-				field()[x][y][z].x = x;
-				field()[x][y][z].y = nextY2;
-				field()[x][y][z].z = z;
-				
-				getPlayer().x = x;
-				getPlayer().y = nextY2;
-				getPlayer().z = z;
-				
-				// Animation
-				getPlayer().anim = new PlayerAnimation(
-					Arrays.asList(
-						new Vector3(x, y + Player.yOffset, z),
-						new Vector3(x, y-(y-nextY2)/2, z),
-						new Vector3(x, nextY2 + Player.yOffset, z)
-					)
-				);
-
-				break;				
-		}
-		
-		if (shift) {
-			field()[x][y][z] = null;
-			
-			field()[x+nextXShift][y][z+nextZShift] = getPlayer();
-			field()[x+nextXShift][y][z+nextZShift].setPosition(x+nextXShift, y, z+nextZShift);
-			field()[x+nextXShift][y][z+nextZShift].x = x+nextXShift;
-			field()[x+nextXShift][y][z+nextZShift].y = y;
-			field()[x+nextXShift][y][z+nextZShift].z = z+nextZShift;
-			
-			getPlayer().x = x+nextXShift;
-			getPlayer().y = y;
-			getPlayer().z = z+nextZShift;
-			
-			// Animation "jump"
-			getPlayer().anim = new PlayerAnimation(
-				Arrays.asList(
-					new Vector3(x, y, z),
-					new Vector3(x+nextXShift/2, y+1, z+nextZShift/2),
-					new Vector3(x+nextXShift, y, z+nextZShift)
-				)
-			);
-		}
+		field()[x][y-1][z].playerMovedOn(this);
 		
 		if (Assets.instance().soundPlayerMoved != null) {
 			Assets.instance().soundPlayerMoved.play();
@@ -586,7 +259,7 @@ public abstract class Level {
 		public int z = 0;
 		
 		boolean avail(Block[][][] l) {
-			return l[x][y][z] != null && l[x][y][z].getType() == BlockType.LIFEFORCE;
+			return l[x][y][z] != null && l[x][y][z] instanceof TileLifeforce;
 		}
 	}
 	

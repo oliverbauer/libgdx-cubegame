@@ -11,7 +11,6 @@ import com.badlogic.gdx.math.Vector3;
 
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
-import io.libgdx.cubegame.blocks.factories.TileFactory;
 import io.libgdx.cubegame.screens.GameScreen;
 
 public class EnemyAnimation implements Animation {
@@ -58,14 +57,7 @@ public class EnemyAnimation implements Animation {
 			} 
 			Block block3 = field[(int)start.x][(int)start.y - 1][(int)start.z];
 			if (block3 != null) {
-				if (block3.getType() == BlockType.POINT || block3.getType() == BlockType.LIFEFORCE) {
-					int x = (int)start.x;
-					int y = (int)start.y;
-					int z = (int)start.z;
-					field[x][y-1][z].dispose(); // cleanup last block
-					
-					field[x][y-1][z] = TileFactory.createGround(x, y-1, z);
-				}
+				block3.enemyMovedOn(cubeApp.getLevel());
 			}
 			
 			index++;

@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.animation.EnemyAnimation;
+import io.libgdx.cubegame.blocks.types.TileElevator.ElevatorDirection;
+import io.libgdx.cubegame.blocks.types.TileJumper.JumpDirection;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.blocks.factories.TileFactory;
@@ -28,11 +30,11 @@ public class YAMLLevel3 extends Level {
 		this.cubeApp = cubeApp;
 		field = new Block[xlength()][ylength()][zlength()];
 
-		Arrow arrow1 = new Arrow(BlockType.ELEVATOR_UP);
+		Arrow arrow1 = new Arrow();
 		arrow1.start = new Vector3(5, 1, 0);
 		arrow1.end   = new Vector3(5, 3, 0);
 		field()[5][2][0] = arrow1;
-		field()[5][0][0] = TileFactory.createElevator(BlockType.ELEVATOR_UP, 5, 0, 0);
+		field()[5][0][0] = TileFactory.createElevator(ElevatorDirection.UP, 5, 0, 0);
 		field()[5][0][1] = TileFactory.createGround(5, 0, 1);
 		field()[5][0][2] = TileFactory.createGround(5, 0, 2);
 		field()[5][0][3] = TileFactory.createGround(5, 0, 3);
@@ -109,11 +111,11 @@ public class YAMLLevel3 extends Level {
 		field()[5][3][8] = TileFactory.createGround(5, 3, 8);
 		field()[5][3][9] = TileFactory.createGround(5, 3, 9);
 		field()[5][3][10] = TileFactory.createGround(5, 3, 10);
-		Arrow arrow2 = new Arrow(BlockType.ELEVATOR_DOWN);
+		Arrow arrow2 = new Arrow();
 		arrow2.start = new Vector3(4, 4, 0);
 		arrow2.end   = new Vector3(4, 0, 0);
 		field()[4][5][0] = arrow2;
-		field()[4][3][0] = TileFactory.createElevator(BlockType.ELEVATOR_DOWN, 4, 3, 0);
+		field()[4][3][0] = TileFactory.createElevator(ElevatorDirection.DOWN, 4, 3, 0);
 		field()[4][3][1] = TileFactory.createGround(4, 3, 1);
 		field()[4][3][2] = TileFactory.createGround(4, 3, 2);
 		field()[4][3][3] = TileFactory.createGround(4, 3, 3);

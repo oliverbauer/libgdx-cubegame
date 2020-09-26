@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.animation.EnemyAnimation;
+import io.libgdx.cubegame.blocks.types.TileElevator.ElevatorDirection;
+import io.libgdx.cubegame.blocks.types.TileJumper.JumpDirection;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.blocks.factories.TileFactory;
@@ -71,7 +73,7 @@ public class YAMLLevel2 extends Level {
 		field()[3][0][8] = TileFactory.createGround(3, 0, 8);
 		field()[3][0][9] = TileFactory.createGround(3, 0, 9);
 		field()[3][0][10] = TileFactory.createGround(3, 0, 10);
-		field()[3][0][11] = TileFactory.createJumper(Color.BLUE, BlockType.RIGHT_SHIFT, 3,0,11);
+		field()[3][0][11] = TileFactory.createJumper(Color.BLUE, JumpDirection.RIGHT, 3,0,11);
 		field()[3][0][13] = TileFactory.createGround(3, 0, 13);
 		field()[3][0][14] = TileFactory.createGround(3, 0, 14);
 		field()[3][0][15] = TileFactory.createGround(3, 0, 15);
@@ -95,7 +97,7 @@ public class YAMLLevel2 extends Level {
 		field()[2][0][9] = TileFactory.createGround(2, 0, 9);
 		field()[2][0][10] = TileFactory.createGround(2, 0, 10);
 		field()[2][0][11] = TileFactory.createGround(2, 0, 11);
-		field()[2][0][13] = TileFactory.createJumper(Color.BLUE, BlockType.LEFT_SHIFT, 2, 0, 13);
+		field()[2][0][13] = TileFactory.createJumper(Color.BLUE, JumpDirection.LEFT, 2, 0, 13);
 		field()[2][0][14] = TileFactory.createGround(2, 0, 14);
 		field()[2][0][15] = TileFactory.createGround(2, 0, 15);
 		field()[2][0][16] = TileFactory.createGround(2, 0, 16);

@@ -52,9 +52,7 @@ public class Arrow extends Block {
 
 	
 	@SuppressWarnings("deprecation")
-	public Arrow(BlockType type) {
-		setType(type);
-		
+	public Arrow() {
 		ModelBuilder modelBuilder = new ModelBuilder();
 		modelBuilder.begin();
 		
