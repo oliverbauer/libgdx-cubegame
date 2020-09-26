@@ -21,7 +21,7 @@ import io.libgdx.cubegame.animation.PlayerAnimation;
 import io.libgdx.cubegame.assets.Assets;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
-import io.libgdx.cubegame.blocks.factories.BlockFactory;
+import io.libgdx.cubegame.blocks.factories.TileFactory;
 import io.libgdx.cubegame.player.Player;
 import io.libgdx.cubegame.player.PlayerDirection;
 import io.libgdx.cubegame.score.Score;
@@ -398,7 +398,7 @@ public abstract class Level {
 			case LIFEFORCE:
 			case POINT:
 				field()[x][y-1][z].dispose(); // cleanup last block
-				field()[x][y-1][z] = BlockFactory.createGround(x, y-1, z);
+				field()[x][y-1][z] = TileFactory.createGround(x, y-1, z);
 				
 				if (onPos.getType() == BlockType.POINT) {
 					Score.score += 100;
@@ -465,9 +465,9 @@ public abstract class Level {
 				// Animation
 				getPlayer().anim = new PlayerAnimation(
 					Arrays.asList(
-						new Vector3(x, y, z),
-						new Vector3(x, y+(nextY-y)/2, z),
-						new Vector3(x, nextY, z)
+						new Vector3(x, y + Player.yOffset, z),
+						new Vector3(x, y+(nextY-y)/2 + Player.yOffset, z),
+						new Vector3(x, nextY + Player.yOffset, z)
 					)
 				);
 
@@ -500,9 +500,9 @@ public abstract class Level {
 				// Animation
 				getPlayer().anim = new PlayerAnimation(
 					Arrays.asList(
-						new Vector3(x, y, z),
+						new Vector3(x, y + Player.yOffset, z),
 						new Vector3(x, y-(y-nextY2)/2, z),
-						new Vector3(x, nextY2, z)
+						new Vector3(x, nextY2 + Player.yOffset, z)
 					)
 				);
 
@@ -561,7 +561,7 @@ public abstract class Level {
 						field()[i][j][k].x = i;
 						field()[i][j][k].y = j;
 						field()[i][j][k].z = k;
-						field()[i][j][k].getInstance().transform = new Matrix4().translate(i,j,k);
+						field()[i][j][k].getInstance().transform = new Matrix4().translate(field()[i][j][k].getPosition());
 					}
 					if (field()[i][j][k] != null && field()[i][j][k].getType() == BlockType.GROUND) {
 						stones.add(new Vector3(i, j, k));
@@ -623,7 +623,7 @@ public abstract class Level {
 					pointsColor = getPlayer().right;
 				}
 
-				field()[x2][y2][z2] = BlockFactory.createLifeforce(pointsColor, x2, y2, z2);
+				field()[x2][y2][z2] = TileFactory.createLifeforce(pointsColor, x2, y2, z2);
 				
 				if (Assets.instance().soundLifeforce != null) {
 					Assets.instance().soundLifeforce.play();
@@ -662,7 +662,7 @@ public abstract class Level {
 					pointsColor = getPlayer().right;
 				}
 
-				field()[x][y][z] = BlockFactory.createPoint(pointsColor, x, y, z);
+				field()[x][y][z] = TileFactory.createPoint(pointsColor, x, y, z);
 				
 				logger.debug("spawed point on {} {}", x, z);
 			}

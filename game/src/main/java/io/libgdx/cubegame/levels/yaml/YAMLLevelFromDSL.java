@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 
+import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLDifficulties;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLDifficulty;
 import io.libgdx.cubegame.levels.yaml.definitions.YAMLEnemy;
@@ -110,7 +111,7 @@ public class YAMLLevelFromDSL {
 					String field = field(xRow, Integer.valueOf(layer), j);
 					
 					if (current.equals("1") || current.equals("2")) {
-						write(field+" = BlockFactory.createGround("+xRow+", "+layer+", "+j+");",2);
+						write(field+" = TileFactory.createGround("+xRow+", "+layer+", "+j+");",2);
 					}
 					
 					if (current.equals("2")) {
@@ -120,21 +121,21 @@ public class YAMLLevelFromDSL {
 					}
 					
 					if (current.equals("3")) {
-						write(field+" = BlockFactory.createJumper(Color.BLUE, BlockType.RIGHT_SHIFT, "+xRow+","+layer+","+j+");",2);
+						write(field+" = TileFactory.createJumper(Color.BLUE, BlockType.RIGHT_SHIFT, "+xRow+","+layer+","+j+");",2);
 						postRotation.add("\t\t"+field+".getInstance().transform.rotate(Vector3.Y, 90);");
 					}
 					
 					if (current.equals("4")) {
-						write(field+" = BlockFactory.createJumper(Color.BLUE, BlockType.LEFT_SHIFT, "+xRow+", "+layer+", "+j+");",2);
+						write(field+" = TileFactory.createJumper(Color.BLUE, BlockType.LEFT_SHIFT, "+xRow+", "+layer+", "+j+");",2);
 						postRotation.add("\t\t"+field+".getInstance().transform.rotate(Vector3.Y, 270);");
 					}
 					
 					if (current.equals("5")) {
-						write(field+" = BlockFactory.createJumper(Color.BLUE, BlockType.FORWARD_SHIFT, "+xRow+", "+layer+", "+j+");",2);
+						write(field+" = TileFactory.createJumper(Color.BLUE, BlockType.FORWARD_SHIFT, "+xRow+", "+layer+", "+j+");",2);
 						postRotation.add("\t\t"+field+".getInstance().transform.rotate(Vector3.Y, 0);");
 					}
 					if (current.equals("6")) {
-						write(field+" = BlockFactory.createJumper(Color.BLUE, BlockType.BACKWARD_SHIFT, "+xRow+", "+layer+", "+j+");",2);
+						write(field+" = TileFactory.createJumper(Color.BLUE, BlockType.BACKWARD_SHIFT, "+xRow+", "+layer+", "+j+");",2);
 						postRotation.add("\t\t"+field+".getInstance().transform.rotate(Vector3.Y, 180);");
 					}
 					
@@ -146,7 +147,7 @@ public class YAMLLevelFromDSL {
 						 * arrow.start = new Vector3(2, 1, 2);
 						 * arrow.end = new Vector3(2, 3, 2);
 						 * field()[2][2][2] = arrow; // z=2 damit player nicht entfernt
-						 * field()[2][0][2] = BlockFactory.createElevator(BlockType.ELEVATOR_UP, 2, 0, 2);
+						 * field()[2][0][2] = TileFactory.createElevator(BlockType.ELEVATOR_UP, 2, 0, 2);
 						 */
 						int l = Integer.valueOf(layer);
 						
@@ -154,7 +155,7 @@ public class YAMLLevelFromDSL {
 						write("arrow"+arrowCounter+".start = new Vector3("+xRow+", "+(l+1)+", "+j+");", 2);
 						write("arrow"+arrowCounter+".end   = new Vector3("+xRow+", "+(l+3)+", "+j+");", 2);
 						write("field()["+xRow+"]["+(l+2)+"]["+j+"] = arrow"+arrowCounter+";", 2);
-						write("field()["+xRow+"]["+(l)+"]["+j+"] = BlockFactory.createElevator(BlockType.ELEVATOR_UP, "+xRow+", "+l+", "+j+");", 2);
+						write("field()["+xRow+"]["+(l)+"]["+j+"] = TileFactory.createElevator(BlockType.ELEVATOR_UP, "+xRow+", "+l+", "+j+");", 2);
 						
 						arrowCounter++;
 					}
@@ -164,7 +165,7 @@ public class YAMLLevelFromDSL {
 						 * arrow2.start = new Vector3(6, 5, 6);
 						 * arrow2.end = new Vector3(6, 1, 6);
 						 * field()[6][2][6] = arrow2; // z=2 damit player nicht entfernt
-						 * field()[6][4][6] = BlockFactory.createElevator(BlockType.ELEVATOR_DOWN, 6, 4, 6);
+						 * field()[6][4][6] = TileFactory.createElevator(BlockType.ELEVATOR_DOWN, 6, 4, 6);
 						 */
 						int l = Integer.valueOf(layer);
 						
@@ -172,7 +173,7 @@ public class YAMLLevelFromDSL {
 						write("arrow"+arrowCounter+".start = new Vector3("+xRow+", "+(l+1)+", "+j+");", 2);
 						write("arrow"+arrowCounter+".end   = new Vector3("+xRow+", "+(l-3)+", "+j+");", 2);
 						write("field()["+xRow+"]["+(l+2)+"]["+j+"] = arrow"+arrowCounter+";", 2);
-						write("field()["+xRow+"]["+(l)+"]["+j+"] = BlockFactory.createElevator(BlockType.ELEVATOR_DOWN, "+xRow+", "+l+", "+j+");", 2);
+						write("field()["+xRow+"]["+(l)+"]["+j+"] = TileFactory.createElevator(BlockType.ELEVATOR_DOWN, "+xRow+", "+l+", "+j+");", 2);
 
 						arrowCounter++;
 					}
@@ -254,7 +255,7 @@ public class YAMLLevelFromDSL {
 				String y2 = second.split(",")[1];
 				String z2 = second.split(",")[2];
 	
-				write("field()["+x1+"]["+(y1+1)+"]["+z1+"] = BlockFactory.createEnemy(color, "+x1+","+(y1+1)+","+z1+");",2);// hackish workaround
+				write("field()["+x1+"]["+(y1+1)+"]["+z1+"] = TileFactory.createEnemy(color, "+x1+","+(y1+1)+","+z1+");",2);// hackish workaround
 				
 				write("EnemyAnimation r = new EnemyAnimation(cubeApp);",2);
 				write("r.start = new Vector3("+x1+","+y1+","+z1+");",2);
@@ -292,7 +293,7 @@ public class YAMLLevelFromDSL {
 	}
 
 	private void generatePlayerDefinition(int playerX, int playerY, int playerZ) throws IOException {
-		write("player = new Player();",2);
+		write("player = new Player(null, BlockType.PLAYER);",2);
 		write("player.x = "+playerX+";",2);
 		write("player.y = "+playerY+";",2);
 		write("player.z = "+playerZ+";",2);
@@ -414,7 +415,7 @@ public class YAMLLevelFromDSL {
 		write("import io.libgdx.cubegame.animation.EnemyAnimation;");
 		write("import io.libgdx.cubegame.blocks.Block;");
 		write("import io.libgdx.cubegame.blocks.BlockType;");
-		write("import io.libgdx.cubegame.blocks.factories.BlockFactory;");
+		write("import io.libgdx.cubegame.blocks.factories.TileFactory;");
 		write("import io.libgdx.cubegame.player.Player;");
 		write("import io.libgdx.cubegame.score.Score;");
 		write("import io.libgdx.cubegame.screens.GameScreen;");

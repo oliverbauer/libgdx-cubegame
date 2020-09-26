@@ -11,7 +11,7 @@ import io.libgdx.cubegame.Config;
 import io.libgdx.cubegame.animation.EnemyAnimation;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
-import io.libgdx.cubegame.blocks.factories.BlockFactory;
+import io.libgdx.cubegame.blocks.factories.TileFactory;
 import io.libgdx.cubegame.player.Player;
 import io.libgdx.cubegame.score.Score;
 import io.libgdx.cubegame.screens.GameScreen;
@@ -28,60 +28,60 @@ public class YAMLLevel1 extends Level {
 		this.cubeApp = cubeApp;
 		field = new Block[xlength()][ylength()][zlength()];
 
-		field()[5][0][2] = BlockFactory.createGround(5, 0, 2);
-		field()[5][0][3] = BlockFactory.createGround(5, 0, 3);
-		field()[5][0][4] = BlockFactory.createGround(5, 0, 4);
-		field()[5][0][5] = BlockFactory.createGround(5, 0, 5);
-		field()[5][0][6] = BlockFactory.createGround(5, 0, 6);
-		field()[5][0][7] = BlockFactory.createGround(5, 0, 7);
-		field()[5][0][8] = BlockFactory.createGround(5, 0, 8);
-		field()[4][0][1] = BlockFactory.createGround(4, 0, 1);
-		field()[4][0][2] = BlockFactory.createGround(4, 0, 2);
-		field()[4][0][3] = BlockFactory.createGround(4, 0, 3);
-		field()[4][0][4] = BlockFactory.createGround(4, 0, 4);
-		field()[4][0][5] = BlockFactory.createGround(4, 0, 5);
-		field()[4][0][6] = BlockFactory.createGround(4, 0, 6);
-		field()[4][0][7] = BlockFactory.createGround(4, 0, 7);
-		field()[4][0][8] = BlockFactory.createGround(4, 0, 8);
-		field()[4][0][9] = BlockFactory.createGround(4, 0, 9);
-		field()[3][0][0] = BlockFactory.createGround(3, 0, 0);
-		field()[3][0][1] = BlockFactory.createGround(3, 0, 1);
-		field()[3][0][2] = BlockFactory.createGround(3, 0, 2);
-		field()[3][0][3] = BlockFactory.createGround(3, 0, 3);
-		field()[3][0][4] = BlockFactory.createGround(3, 0, 4);
-		field()[3][0][5] = BlockFactory.createGround(3, 0, 5);
-		field()[3][0][6] = BlockFactory.createGround(3, 0, 6);
-		field()[3][0][7] = BlockFactory.createGround(3, 0, 7);
-		field()[3][0][8] = BlockFactory.createGround(3, 0, 8);
-		field()[3][0][9] = BlockFactory.createGround(3, 0, 9);
-		field()[3][0][10] = BlockFactory.createGround(3, 0, 10);
-		field()[2][0][0] = BlockFactory.createGround(2, 0, 0);
-		field()[2][0][1] = BlockFactory.createGround(2, 0, 1);
-		field()[2][0][2] = BlockFactory.createGround(2, 0, 2);
-		field()[2][0][3] = BlockFactory.createGround(2, 0, 3);
-		field()[2][0][4] = BlockFactory.createGround(2, 0, 4);
-		field()[2][0][5] = BlockFactory.createGround(2, 0, 5);
-		field()[2][0][6] = BlockFactory.createGround(2, 0, 6);
-		field()[2][0][7] = BlockFactory.createGround(2, 0, 7);
-		field()[2][0][8] = BlockFactory.createGround(2, 0, 8);
-		field()[2][0][9] = BlockFactory.createGround(2, 0, 9);
-		field()[2][0][10] = BlockFactory.createGround(2, 0, 10);
-		field()[1][0][1] = BlockFactory.createGround(1, 0, 1);
-		field()[1][0][2] = BlockFactory.createGround(1, 0, 2);
-		field()[1][0][3] = BlockFactory.createGround(1, 0, 3);
-		field()[1][0][4] = BlockFactory.createGround(1, 0, 4);
-		field()[1][0][5] = BlockFactory.createGround(1, 0, 5);
-		field()[1][0][6] = BlockFactory.createGround(1, 0, 6);
-		field()[1][0][7] = BlockFactory.createGround(1, 0, 7);
-		field()[1][0][8] = BlockFactory.createGround(1, 0, 8);
-		field()[1][0][9] = BlockFactory.createGround(1, 0, 9);
-		field()[0][0][2] = BlockFactory.createGround(0, 0, 2);
-		field()[0][0][3] = BlockFactory.createGround(0, 0, 3);
-		field()[0][0][4] = BlockFactory.createGround(0, 0, 4);
-		field()[0][0][5] = BlockFactory.createGround(0, 0, 5);
-		field()[0][0][6] = BlockFactory.createGround(0, 0, 6);
-		field()[0][0][7] = BlockFactory.createGround(0, 0, 7);
-		field()[0][0][8] = BlockFactory.createGround(0, 0, 8);
+		field()[5][0][2] = TileFactory.createGround(5, 0, 2);
+		field()[5][0][3] = TileFactory.createGround(5, 0, 3);
+		field()[5][0][4] = TileFactory.createGround(5, 0, 4);
+		field()[5][0][5] = TileFactory.createGround(5, 0, 5);
+		field()[5][0][6] = TileFactory.createGround(5, 0, 6);
+		field()[5][0][7] = TileFactory.createGround(5, 0, 7);
+		field()[5][0][8] = TileFactory.createGround(5, 0, 8);
+		field()[4][0][1] = TileFactory.createGround(4, 0, 1);
+		field()[4][0][2] = TileFactory.createGround(4, 0, 2);
+		field()[4][0][3] = TileFactory.createGround(4, 0, 3);
+		field()[4][0][4] = TileFactory.createGround(4, 0, 4);
+		field()[4][0][5] = TileFactory.createGround(4, 0, 5);
+		field()[4][0][6] = TileFactory.createGround(4, 0, 6);
+		field()[4][0][7] = TileFactory.createGround(4, 0, 7);
+		field()[4][0][8] = TileFactory.createGround(4, 0, 8);
+		field()[4][0][9] = TileFactory.createGround(4, 0, 9);
+		field()[3][0][0] = TileFactory.createGround(3, 0, 0);
+		field()[3][0][1] = TileFactory.createGround(3, 0, 1);
+		field()[3][0][2] = TileFactory.createGround(3, 0, 2);
+		field()[3][0][3] = TileFactory.createGround(3, 0, 3);
+		field()[3][0][4] = TileFactory.createGround(3, 0, 4);
+		field()[3][0][5] = TileFactory.createGround(3, 0, 5);
+		field()[3][0][6] = TileFactory.createGround(3, 0, 6);
+		field()[3][0][7] = TileFactory.createGround(3, 0, 7);
+		field()[3][0][8] = TileFactory.createGround(3, 0, 8);
+		field()[3][0][9] = TileFactory.createGround(3, 0, 9);
+		field()[3][0][10] = TileFactory.createGround(3, 0, 10);
+		field()[2][0][0] = TileFactory.createGround(2, 0, 0);
+		field()[2][0][1] = TileFactory.createGround(2, 0, 1);
+		field()[2][0][2] = TileFactory.createGround(2, 0, 2);
+		field()[2][0][3] = TileFactory.createGround(2, 0, 3);
+		field()[2][0][4] = TileFactory.createGround(2, 0, 4);
+		field()[2][0][5] = TileFactory.createGround(2, 0, 5);
+		field()[2][0][6] = TileFactory.createGround(2, 0, 6);
+		field()[2][0][7] = TileFactory.createGround(2, 0, 7);
+		field()[2][0][8] = TileFactory.createGround(2, 0, 8);
+		field()[2][0][9] = TileFactory.createGround(2, 0, 9);
+		field()[2][0][10] = TileFactory.createGround(2, 0, 10);
+		field()[1][0][1] = TileFactory.createGround(1, 0, 1);
+		field()[1][0][2] = TileFactory.createGround(1, 0, 2);
+		field()[1][0][3] = TileFactory.createGround(1, 0, 3);
+		field()[1][0][4] = TileFactory.createGround(1, 0, 4);
+		field()[1][0][5] = TileFactory.createGround(1, 0, 5);
+		field()[1][0][6] = TileFactory.createGround(1, 0, 6);
+		field()[1][0][7] = TileFactory.createGround(1, 0, 7);
+		field()[1][0][8] = TileFactory.createGround(1, 0, 8);
+		field()[1][0][9] = TileFactory.createGround(1, 0, 9);
+		field()[0][0][2] = TileFactory.createGround(0, 0, 2);
+		field()[0][0][3] = TileFactory.createGround(0, 0, 3);
+		field()[0][0][4] = TileFactory.createGround(0, 0, 4);
+		field()[0][0][5] = TileFactory.createGround(0, 0, 5);
+		field()[0][0][6] = TileFactory.createGround(0, 0, 6);
+		field()[0][0][7] = TileFactory.createGround(0, 0, 7);
+		field()[0][0][8] = TileFactory.createGround(0, 0, 8);
 
 		switch (Config.difficulty) {
 			case VERY_EASY:
@@ -101,7 +101,7 @@ public class YAMLLevel1 extends Level {
 				enemyPath2(Color.RED);
 		}
 
-		player = new Player();
+		player = new Player(null, BlockType.PLAYER);
 		player.x = 1;
 		player.y = 1;
 		player.z = 3;
@@ -110,7 +110,7 @@ public class YAMLLevel1 extends Level {
 	}
 
 	public void enemyPath0(Color color) {
-		field()[0][2][8] = BlockFactory.createEnemy(color, 0,2,8);
+		field()[0][2][8] = TileFactory.createEnemy(color, 0,2,8);
 		EnemyAnimation r = new EnemyAnimation(cubeApp);
 		r.start = new Vector3(0,1,8);
 		r.end = new Vector3(0, 1, 7);
@@ -134,7 +134,7 @@ public class YAMLLevel1 extends Level {
 	}
 
 	public void enemyPath1(Color color) {
-		field()[2][2][10] = BlockFactory.createEnemy(color, 2,2,10);
+		field()[2][2][10] = TileFactory.createEnemy(color, 2,2,10);
 		EnemyAnimation r = new EnemyAnimation(cubeApp);
 		r.start = new Vector3(2,1,10);
 		r.end = new Vector3(3, 1, 10);
@@ -168,7 +168,7 @@ public class YAMLLevel1 extends Level {
 	}
 
 	public void enemyPath2(Color color) {
-		field()[0][2][8] = BlockFactory.createEnemy(color, 0,2,8);
+		field()[0][2][8] = TileFactory.createEnemy(color, 0,2,8);
 		EnemyAnimation r = new EnemyAnimation(cubeApp);
 		r.start = new Vector3(0,1,8);
 		r.end = new Vector3(0, 1, 7);

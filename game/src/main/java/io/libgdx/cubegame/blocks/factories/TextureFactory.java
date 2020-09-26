@@ -19,20 +19,29 @@ import com.badlogic.gdx.graphics.Texture;
 // TODO Cleanup this mess...
 public class TextureFactory {
 	public static Texture createTexture(Color color) {
+		return createTexture(toAWTColor(color));
+	}
+	
+	public static Texture createTexture(java.awt.Color c) {
 		BufferedImage bufferedImage = new BufferedImage(80, 80, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.fillRect(0, 0, 80, 80);
-        g2d.setColor(toAWTColor(color));
-        
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
+	    Graphics2D g2d = bufferedImage.createGraphics();
+	    
+	    g2d.setColor(java.awt.Color.BLACK);
+	    g2d.fillRect(0, 0, 80, 80);
+	    
+	    g2d.setColor(c);
+	    g2d.fillRect(1, 1, 78, 78);
+	    
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    try {
 			ImageIO.write(bufferedImage, "png", baos);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        byte[] byteArray = baos.toByteArray();
-        Pixmap mask = new Pixmap(byteArray, 0, byteArray.length);
-		return new Texture( mask );
+	    byte[] byteArray = baos.toByteArray();
+	    Pixmap mask = new Pixmap(byteArray, 0, byteArray.length);
+		
+	    return new Texture(mask);
 	}
 	
 	public static Texture createTextureWithBorder(Color color, java.awt.Color borderColor) {
@@ -197,7 +206,7 @@ public class TextureFactory {
 		return new Texture(new Pixmap(byteArray, 0, byteArray.length));
 	}
 	
-	private static java.awt.Color toAWTColor(Color color) {
+	public static java.awt.Color toAWTColor(Color color) {
         if (color == Color.BLACK) {
         	return java.awt.Color.BLACK;
         } else if (color == Color.YELLOW) {

@@ -53,7 +53,7 @@ public class Arrow extends Block {
 	
 	@SuppressWarnings("deprecation")
 	public Arrow(BlockType type) {
-		super(TextureFactory.createTexture(Color.BLACK), type);
+		setType(type);
 		
 		ModelBuilder modelBuilder = new ModelBuilder();
 		modelBuilder.begin();

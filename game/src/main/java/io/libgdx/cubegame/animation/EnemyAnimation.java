@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
-import io.libgdx.cubegame.blocks.factories.BlockFactory;
+import io.libgdx.cubegame.blocks.factories.TileFactory;
 import io.libgdx.cubegame.screens.GameScreen;
 
 public class EnemyAnimation implements Animation {
@@ -21,6 +21,8 @@ public class EnemyAnimation implements Animation {
 	public EnemyAnimation(GameScreen cubeApp) {
 		this.cubeApp = cubeApp;
 	}
+	
+	// TODO sind zu hoch!
 	
 	private float alpha = 0;
 	private float speed = 5f;
@@ -62,7 +64,7 @@ public class EnemyAnimation implements Animation {
 					int z = (int)start.z;
 					field[x][y-1][z].dispose(); // cleanup last block
 					
-					field[x][y-1][z] = BlockFactory.createGround(x, y-1, z);
+					field[x][y-1][z] = TileFactory.createGround(x, y-1, z);
 				}
 			}
 			

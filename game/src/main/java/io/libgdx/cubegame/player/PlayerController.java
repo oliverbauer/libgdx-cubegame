@@ -7,12 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 import io.libgdx.cubegame.levels.Level;
-import io.libgdx.cubegame.screens.GameScreen;
 
 public class PlayerController {
 	private static final Logger logger = LoggerFactory.getLogger(PlayerController.class);
 	private Level level;
-	private GameScreen gameScreen;
 	
 	private int xNext;
 	private int yNext;
@@ -25,9 +23,8 @@ public class PlayerController {
 
 	private PlayerDirection direction = PlayerDirection.NONE;
 	
-	public PlayerController(Level level, GameScreen gameScreen) {
+	public PlayerController(Level level) {
 		this.level = level;
-		this.gameScreen = gameScreen;
 	}
 	
 	public void playerMovement(PlayerDirection nextDirection) {
@@ -90,7 +87,7 @@ public class PlayerController {
 					axis = Vector3.Z;
 				}
 				
-				Vector3 newPosition = new Vector3(xNext, yNext, zNext);
+				Vector3 newPosition = new Vector3(xNext + Player.xOffset, yNext + Player.yOffset, zNext + Player.zOffset);
 				tmpV.set(level.getPlayer().getPosition()).lerp(newPosition, alpha);
 				
 				

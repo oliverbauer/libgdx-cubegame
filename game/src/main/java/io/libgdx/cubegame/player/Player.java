@@ -1,31 +1,27 @@
 package io.libgdx.cubegame.player;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Arrays;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.g3d.Environment;
-import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.attributes.BlendingAttribute;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.PointLight;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 import io.libgdx.cubegame.animation.Animation;
 import io.libgdx.cubegame.animation.PlayerAnimation;
 import io.libgdx.cubegame.blocks.Block;
 import io.libgdx.cubegame.blocks.BlockType;
-import io.libgdx.cubegame.blocks.factories.TextureFactory;
+import io.libgdx.cubegame.blocks.factories.CubeCornerResult;
 
 public class Player extends Block {
-	private static final Logger logger = LoggerFactory.getLogger(Player.class);
-
 	/**
 	 * For jumping over places see {@link PlayerAnimation}.
 	 * For jumping on up if player did not press w/a/s/d see {@link CubeApp#render()}
@@ -34,12 +30,20 @@ public class Player extends Block {
 	
 	public boolean isMoving = false;
 
+	// Initial colors... when player moves, those will be "switched"
 	public Color front = Color.BLACK;
 	public Color right = Color.YELLOW;
 	public Color bottom = Color.BLUE;
 	public Color left = Color.RED;
 	public Color top = Color.GREEN;
 	public Color back = Color.CYAN;
+	
+	private java.awt.Color frontAWT = java.awt.Color.BLACK;
+	private java.awt.Color rightAWT = java.awt.Color.YELLOW;
+	private java.awt.Color bottomAWT = java.awt.Color.BLUE;
+	private java.awt.Color leftAWT = java.awt.Color.RED;
+	private java.awt.Color topAWT = java.awt.Color.GREEN;
+	private java.awt.Color backAWT = java.awt.Color.CYAN;
 
 	// Idea from warpstrone-libgdx-mashup-master
 	private float lightPosition = 0;
@@ -47,14 +51,22 @@ public class Player extends Block {
 	private float radiusA = 1f;
 	private float radiusB = 1f;
 	private PointLight pointLight; 
+	
+	public static float xOffset = 0f;
+	public static float yOffset = -0.5f;
+	public static float zOffset = 0f;
 
-	public Player() {
-		// TODO Player refactor to remove texture... override from createCube...
-		super(TextureFactory.createTexture(Color.BLACK), BlockType.PLAYER);
-
-		createCube();
+	public Player(Model model, BlockType type) {
+		create();
+		setType(type);
+		instance.transform = new Matrix4().translate(getPosition());
 	}
 	
+	@Override
+	public Vector3 getPosition() {
+		return new Vector3(x + xOffset, y + yOffset, z + zOffset);
+	}
+
 	@Override
 	public void render(ModelBatch modelBatch, Environment environment) {
 		if (pointLight == null) {
@@ -102,70 +114,148 @@ public class Player extends Block {
 			back = bottom;
 			bottom = front;
 			front = temp;
+			
+			java.awt.Color tempAWT = topAWT;
+			topAWT = backAWT;
+			backAWT = bottomAWT;
+			bottomAWT = frontAWT;
+			frontAWT = tempAWT;
 		} else if (rot == PlayerDirection.RIGHT) {
 			Color temp = front;
 			front = bottom;
 			bottom = back;
 			back = top;
 			top = temp;
+			
+			java.awt.Color tempAWT = frontAWT;
+			frontAWT = bottomAWT;
+			bottomAWT = backAWT;
+			backAWT = topAWT;
+			topAWT = tempAWT;
+
 		} else if (rot == PlayerDirection.FORWARD) {
 			Color temp = bottom;
 			bottom = left;
 			left = top;
 			top = right;
 			right = temp;
+			
+			java.awt.Color tempAWT = bottomAWT;
+			bottomAWT = leftAWT;
+			leftAWT = topAWT;
+			topAWT = rightAWT;
+			rightAWT = tempAWT;
 		} else if (rot == PlayerDirection.BACK) {
 			Color temp = right;
 			right = top;
 			top = left;
 			left = bottom;
 			bottom = temp;
+			
+			java.awt.Color tempAWT = rightAWT;
+			rightAWT = topAWT;
+			topAWT = leftAWT;
+			leftAWT = bottomAWT;
+			bottomAWT = tempAWT;
 		}
 
-		createCube();
-	}
-
-	private void createCube() {
-		ModelBuilder modelBuilder = new ModelBuilder();
-		float d = 0.5f;
-		int attr = VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal
-				| VertexAttributes.Usage.TextureCoordinates;
-
-		BlendingAttribute blendingAttribute = new BlendingAttribute();
-		blendingAttribute.opacity = 1.0f;
-		modelBuilder.begin();
-		modelBuilder
-				.part("front", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(front)))
-				.rect(-d, -d, -d, -d, d, -d, d, d, -d, d, -d, -d, 0, 0, -1);
-		modelBuilder
-				.part("back", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(back)))
-				.rect(-d, d, d, -d, -d, d, d, -d, d, d, d, d, 0, 0, 1);
-		modelBuilder
-				.part("bottom", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(bottom)))
-				.rect(-d, -d, d, -d, -d, -d, d, -d, -d, d, -d, d, 0, -1, 0);
-		modelBuilder
-				.part("top", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(top)))
-				.rect(-d, d, -d, -d, d, d, d, d, d, d, d, -d, 0, 1, 0);
-		modelBuilder
-				.part("left", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(left)))
-				.rect(-d, -d, d, -d, d, d, -d, d, -d, -d, -d, -d, -1, 0, 0);
-		modelBuilder
-				.part("right", GL20.GL_TRIANGLES, attr,
-						new Material(blendingAttribute, ColorAttribute.createDiffuse(right)))
-				.rect(d, -d, -d, d, d, -d, d, d, d, d, -d, d, 1, 0, 0);
+		create();
 		
-		Model cube = modelBuilder.end();
+		instance.transform = new Matrix4().translate(getPosition());
+	}
+	
+	private void create() {
+		BlendingAttribute blendingAttribute = new BlendingAttribute();
+		blendingAttribute.opacity = .5f;
 
+		ModelBuilder builder = new ModelBuilder();
+		builder.begin();
+
+
+		float width = 0.8f;
+		float height = 0.8f;
+		float depth = 0.8f;
+		float size = 0.9f;
+		
+		float min = 0.1f;
+		float max = 0.7f;
+		
+		boolean innerCubeBlack = false;
+		
+		List<java.awt.Color>  awtBlack = Arrays.asList(java.awt.Color.BLACK, java.awt.Color.BLACK, java.awt.Color.BLACK, java.awt.Color.BLACK, java.awt.Color.BLACK, java.awt.Color.BLACK);
+		List<java.awt.Color>  awtCube = Arrays.asList(frontAWT, backAWT, bottomAWT, topAWT, leftAWT, rightAWT);
+		List<Color> colorListCube = Arrays.asList(front, back, bottom, top, left, right);
+		List<Color> colorListCubeBlack = Arrays.asList(Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK,Color.BLACK);
+
+		
+		java.awt.Color[] colorsAWTBlack = awtBlack.toArray(new java.awt.Color[6]);
+		java.awt.Color[] colorsAWTCube = awtCube.toArray(new java.awt.Color[6]);
+		Color[] colorsCube = colorListCube.toArray(new Color[6]);
+		Color[] blackCube = colorListCubeBlack.toArray(new Color[6]);
+
+		java.awt.Color[] awtColors;
+		Color[] gdxColors;
+		
+		if (innerCubeBlack) {
+			awtColors = colorsAWTBlack;
+			gdxColors = blackCube;
+		} else {
+			awtColors = colorsAWTCube;
+			gdxColors = colorsCube;
+		}
+		
+		float transparency = 1f;
+		
+		new CubeCornerResult(0,0,0,size,size,size).finialize(builder, gdxColors, awtColors, transparency);
+		
+		width = min;
+		height = max;
+		depth = max;
+
+		if (innerCubeBlack) {
+			awtColors = colorsAWTCube;
+			gdxColors = colorsCube;
+		} else {
+			awtColors = colorsAWTBlack;
+			gdxColors = blackCube;
+		}
+		
+		new CubeCornerResult(0+size/2,0,0,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+		new CubeCornerResult(0-size/2,0,0,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+		
+		width = max;
+		height = min;
+		depth = max;
+		new CubeCornerResult(0,0+size/2,0,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+		new CubeCornerResult(0,0-size/2,0,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+
+		width = max;
+		height = max;
+		depth = min;
+		new CubeCornerResult(0,0,0+size/2,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+		new CubeCornerResult(0,0,0-size/2,width,height,depth).finialize(builder, gdxColors, awtColors, transparency);
+
+		Model cube = builder.end();
+		
+		
+		
 		setModel(cube);
 		setPosition(x, y, z);
-
-		if (logger.isDebugEnabled()) {
-			logger.debug("Cube with top: {}", logColor(top));
+		
+		if (innerCubeBlack) {
+			instance.materials.get(0).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+			instance.materials.get(1).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+			instance.materials.get(2).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+			instance.materials.get(3).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+			instance.materials.get(4).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+			instance.materials.get(5).set(TextureAttribute.createDiffuse(createTextureWithText(java.awt.Color.BLACK, "", 20)));
+		} else {
+			instance.materials.get(0).set(TextureAttribute.createDiffuse(createTextureWithText(frontAWT, "", 20)));
+			instance.materials.get(1).set(TextureAttribute.createDiffuse(createTextureWithText(backAWT, "", 20)));
+			instance.materials.get(2).set(TextureAttribute.createDiffuse(createTextureWithText(bottomAWT, "", 20)));
+			instance.materials.get(3).set(TextureAttribute.createDiffuse(createTextureWithText(topAWT, "", 20)));
+			instance.materials.get(4).set(TextureAttribute.createDiffuse(createTextureWithText(leftAWT, "", 20)));
+			instance.materials.get(5).set(TextureAttribute.createDiffuse(createTextureWithText(rightAWT, "", 20)));
 		}
 	}
 	

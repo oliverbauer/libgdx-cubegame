@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
 
 		background = new Background(environment, modelBatch, perspectiveCamera);
 		
-		playerController = new PlayerController(level, this);
+		playerController = new PlayerController(level);
 	}
 
 	@Override
@@ -143,9 +143,9 @@ public class GameScreen implements Screen {
 			// Animation
 			level.getPlayer().anim = new PlayerAnimation(
 				Arrays.asList(
-					new Vector3(x, y, z),
+					level.getPlayer().getPosition(),
 					new Vector3(x, y + 1, z),
-					new Vector3(x, y, z)
+					level.getPlayer().getPosition()
 				)
 			);
 		}
@@ -219,7 +219,7 @@ public class GameScreen implements Screen {
 		updateCamera();
 		
 		level.getPlayer().isMoving = false;
-		playerController = new PlayerController(level, this);
+		playerController = new PlayerController(level);
 	}
 	
 	private void updateCamera() {
