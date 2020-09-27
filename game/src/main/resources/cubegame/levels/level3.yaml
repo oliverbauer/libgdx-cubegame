@@ -18,7 +18,6 @@ difficulties:
       enemies: 
       - path: 0
         color: "RED"
-      overrides: [ [ a b ], [b c] ] # not used/implemented right now... TODO override field entryies
  - normal:
       enemies: 
       # TODO Update path 1
@@ -30,7 +29,6 @@ difficulties:
         color: "BLUE" 
       - path: 2
         color: "GREEN"
-      overrides: [ [ a b ], [b c] ]
  - very_hard:
       enemies: 
       - path: 1

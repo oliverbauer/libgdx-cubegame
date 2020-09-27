@@ -185,7 +185,7 @@ public class YAMLLevel3 extends Level {
 
 	public void enemyPath0(Color color) {
 		field()[0][2][8] = TileFactory.createEnemy(color, 0,2,8);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,0,2,8);
 		r.start = new Vector3(0,1,8);
 		r.end = new Vector3(0, 1, 7);
 		r.field = field;
@@ -209,7 +209,7 @@ public class YAMLLevel3 extends Level {
 
 	public void enemyPath1(Color color) {
 		field()[2][2][10] = TileFactory.createEnemy(color, 2,2,10);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,2,2,10);
 		r.start = new Vector3(2,1,10);
 		r.end = new Vector3(3, 1, 10);
 		r.field = field;
@@ -243,7 +243,7 @@ public class YAMLLevel3 extends Level {
 
 	public void enemyPath2(Color color) {
 		field()[0][5][8] = TileFactory.createEnemy(color, 0,5,8);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,0,5,8);
 		r.start = new Vector3(0,4,8);
 		r.end = new Vector3(0, 4, 7);
 		r.field = field;

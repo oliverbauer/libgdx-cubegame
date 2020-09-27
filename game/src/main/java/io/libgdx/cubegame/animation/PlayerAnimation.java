@@ -28,6 +28,9 @@ public class PlayerAnimation implements Animation {
 		
 		if (alpha > 1) {
 			block.anim = null;
+			for (AnimationCompletedListener listener : listeners) {
+				listener.animationCompleted();
+			}
 			return;
 		}
 		

@@ -74,9 +74,8 @@ public class TileFactory {
 	/**
 	 * Only for lifeforces!
 	 */
-	public static Block createBrokenTile(Color color, int x, int y, int z) {
-		TileBroken block =  new TileBroken();
-		block.color = color;
+	public static Block createBrokenTile(int x, int y, int z, int num) {
+		TileBroken block =  new TileBroken(num);
 		block.x = x;
 		block.y = y;
 		block.z = z;
@@ -90,7 +89,6 @@ public class TileFactory {
 	 */
 	public static Block createTileTrappingDoor(Color color, int x, int y, int z) {
 		TileTrappingDoor block =  new TileTrappingDoor(color);
-		block.color = color;
 		block.x = x;
 		block.y = y;
 		block.z = z;
@@ -189,8 +187,6 @@ public class TileFactory {
 	
 	public static Block createJumper(Color color, JumpDirection direction, int x, int y, int z) {
 		TileJumper block =  new TileJumper(color, direction);
-		
-		block.color = color;
 		block.x = x;
 		block.y = y;
 		block.z = z;

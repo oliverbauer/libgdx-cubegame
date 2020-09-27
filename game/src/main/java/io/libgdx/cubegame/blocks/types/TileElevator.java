@@ -22,6 +22,8 @@ import io.libgdx.cubegame.player.PlayerDirection;
 
 /**
  * Elevator between layers.
+ * 
+ * TODO Improve: move this block including player... old position of this field will be null... elevator should be working in both directions
  */
 public class TileElevator extends Block {
 	public enum ElevatorDirection {

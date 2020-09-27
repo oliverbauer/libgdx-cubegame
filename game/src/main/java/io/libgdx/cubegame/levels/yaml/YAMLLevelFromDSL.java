@@ -41,9 +41,9 @@ public class YAMLLevelFromDSL {
 
 	public static void main(String[] args) throws IOException {
 		new YAMLLevelFromDSL().generateFromTo("level1.yaml", "YAMLLevel1.java");
-		new YAMLLevelFromDSL().generateFromTo("level2.yaml", "YAMLLevel2.java");
-		new YAMLLevelFromDSL().generateFromTo("level3.yaml", "YAMLLevel3.java");
-		new YAMLLevelFromDSL().generateFromTo("level4.yaml", "YAMLLevel4.java");
+//		new YAMLLevelFromDSL().generateFromTo("level2.yaml", "YAMLLevel2.java");
+//		new YAMLLevelFromDSL().generateFromTo("level3.yaml", "YAMLLevel3.java");
+//		new YAMLLevelFromDSL().generateFromTo("level4.yaml", "YAMLLevel4.java");
 	}
 	
 	private BufferedWriter bufferedWriter;
@@ -187,6 +187,11 @@ public class YAMLLevelFromDSL {
 
 						arrowCounter++;
 					}
+					
+					if (current.startsWith("B(")) {
+						String num = current.substring(2, current.lastIndexOf(")"));
+						write(field+" = TileFactory.createBrokenTile("+xRow+", "+layer+", "+j+", "+num+");",2);
+					}
 				}
 			}		
 		}
@@ -267,7 +272,7 @@ public class YAMLLevelFromDSL {
 	
 				write("field()["+x1+"]["+(y1+1)+"]["+z1+"] = TileFactory.createEnemy(color, "+x1+","+(y1+1)+","+z1+");",2);// hackish workaround
 				
-				write("EnemyAnimation r = new EnemyAnimation(cubeApp);",2);
+				write("EnemyAnimation r = new EnemyAnimation(cubeApp,"+x1+","+(y1+1)+","+z1+");",2);
 				write("r.start = new Vector3("+x1+","+y1+","+z1+");",2);
 				write("r.end = new Vector3("+x2+", "+y2+", "+z2+");",2);
 				write("r.field = field;",2);

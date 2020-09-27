@@ -11,6 +11,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -43,12 +45,20 @@ public class Block implements Disposable {
 	
 	public Animation anim;
 	
+	// TODO e.g. TileTrappingDoor
+	private Set<BlockListener> listeningBlocks = new HashSet<>();
+	
+	public Set<BlockListener> getListeningBlocks() {
+		return listeningBlocks;
+	}
+	
 	public void playerMovedOn(Level level) {
-		
+		for (BlockListener listener : getListeningBlocks()) {
+			listener.playerMovedOnBlock(level.field()[x][y][z]);
+		}
 	}
 	
 	public void enemyMovedOn(Level level) {
-		
 	}
 	
 	/**
@@ -136,7 +146,7 @@ public class Block implements Disposable {
         int y1 = ((height - fm.getHeight()) / 2);
 
         int rule = AlphaComposite.SRC_OVER;
-        Composite comp = AlphaComposite.getInstance(rule , 0.7f);
+        Composite comp = AlphaComposite.getInstance(rule , 1f); // less than 1: bleeds out...
         g2d.setComposite(comp );
         if (c == java.awt.Color.BLACK) {
         	g2d.setColor(java.awt.Color.WHITE);
@@ -158,4 +168,21 @@ public class Block implements Disposable {
 	    return new Texture(mask);
 	}
 
+	protected java.awt.Color toAWTColor(Color color) {
+        if (color == Color.BLACK) {
+        	return java.awt.Color.BLACK;
+        } else if (color == Color.YELLOW) {
+        	return java.awt.Color.YELLOW;
+        } else if (color == Color.BLUE) {
+        	return java.awt.Color.BLUE;
+        } else if (color == Color.RED) {
+        	return java.awt.Color.RED;
+        } else if (color == Color.GREEN) {
+        	return java.awt.Color.GREEN;
+        } else if (color == Color.CYAN) {
+        	return java.awt.Color.CYAN;
+        } else {
+        	throw new RuntimeException("Unknown Color! "+color);
+        }
+	}
 }

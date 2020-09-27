@@ -15,16 +15,18 @@ import io.libgdx.cubegame.player.Player;
 import io.libgdx.cubegame.player.PlayerDirection;
 
 /**
- * A block which destroys itself after n times someone moves over it
- * (only Player?)
+ * A block which destroys itself after n times someone moves over it.
+ * 
+ * TODO Don't set to null: Player/Enemy should die when num==0. See TileTrappingDoor.java
  */
 public class TileBroken extends Block {
 	private int num = 3;
 
 	List<java.awt.Color> awtcolors;
 	
-	public TileBroken() {
+	public TileBroken(int num) {
 		color = Color.BLACK;
+		this.num = num;
 		
 		BlendingAttribute blendingAttribute = new BlendingAttribute();
 		blendingAttribute.opacity = .9f;
@@ -53,6 +55,20 @@ public class TileBroken extends Block {
 	}
 	
 	@Override
+	public void enemyMovedOn(Level level) {
+		num--;
+		
+		updateMaterial();
+		
+		if (num == 0) {
+			// TODO Should occur on next allowed movement of enemy, not directly
+			// TODO enemy should not move over null field when it was a TileBroken
+			// TODO play sound
+			level.field()[x][y][z] = null; 
+		}
+	}
+
+	@Override
 	public void playerMovedOn(Level level) {
 		num--;
 		
@@ -60,6 +76,7 @@ public class TileBroken extends Block {
 		
 		if (num == 0) {
 			// TODO Should occur on next allowed movement of player, not directly
+			// TODO play sound
 			level.field()[x][y][z] = null; 
 		}
 	}

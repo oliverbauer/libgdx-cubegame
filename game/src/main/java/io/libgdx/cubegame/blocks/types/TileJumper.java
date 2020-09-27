@@ -74,7 +74,7 @@ public class TileJumper extends Block {
 		switch (jumpDirection) {
 			case RIGHT:
 				nextXShift = 0;
-				nextZShift = 2; // TODO XX_Shift: Configurable how many stones will be jumped over...
+				nextZShift = 2; // TODO XX_Shift: Configurable how many stones will be jumped over... use same idea as in TileElevator
 				break;
 			case LEFT:
 				nextXShift = 0;

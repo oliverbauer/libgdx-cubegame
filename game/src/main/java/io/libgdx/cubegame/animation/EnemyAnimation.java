@@ -10,6 +10,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 import io.libgdx.cubegame.blocks.Block;
+import io.libgdx.cubegame.blocks.BlockListener;
 import io.libgdx.cubegame.blocks.BlockType;
 import io.libgdx.cubegame.screens.GameScreen;
 
@@ -17,11 +18,16 @@ public class EnemyAnimation implements Animation {
 	private static final Logger logger = LoggerFactory.getLogger(EnemyAnimation.class);
 	private GameScreen cubeApp;
 	
-	public EnemyAnimation(GameScreen cubeApp) {
-		this.cubeApp = cubeApp;
-	}
+	private int xPos;
+	private int yPos;
+	private int zPos;
 	
-	// TODO sind zu hoch!
+	public EnemyAnimation(GameScreen cubeApp, int x, int y, int z) {
+		this.cubeApp = cubeApp;
+		this.xPos = x;
+		this.yPos = y;
+		this.zPos = z;
+	}
 	
 	private float alpha = 0;
 	private float speed = 5f;
@@ -36,6 +42,11 @@ public class EnemyAnimation implements Animation {
 		vectors.add(vector);
 	}
 
+	public void destroyEnemy() {
+		// TODO Change animation to falling enemy... when finished: set position null
+		cubeApp.getLevel().field()[xPos][yPos][zPos] = null;
+	}
+	
 	@Override
 	public void update(Block block) {
 		final float delta = Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f);
@@ -58,6 +69,10 @@ public class EnemyAnimation implements Animation {
 			Block block3 = field[(int)start.x][(int)start.y - 1][(int)start.z];
 			if (block3 != null) {
 				block3.enemyMovedOn(cubeApp.getLevel());
+				
+				for (BlockListener listener : block3.getListeningBlocks()) {
+					listener.enemyMovedOnBlock(block3, this);
+				}
 			}
 			
 			index++;
@@ -84,7 +99,15 @@ public class EnemyAnimation implements Animation {
 			
 		float angle = fromAngle + alpha * (toAngle - fromAngle);
 		
-		tmpV.set(start).lerp(end, alpha);
+		Vector3 s = new Vector3();
+		s.x = start.x;
+		s.y = start.y - 0.45f;
+		s.z = start.z;
+		Vector3 e = new Vector3();
+		e.x = end.x;
+		e.y = end.y - 0.45f;
+		e.z = end.z;
+		tmpV.set(s).lerp(e, alpha);
 		
 		block.getInstance().transform.setToRotation(axis, angle);
 		block.getInstance().transform.setTranslation(tmpV);

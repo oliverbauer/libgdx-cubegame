@@ -48,8 +48,8 @@ public class Player extends Block {
 	// Idea from warpstrone-libgdx-mashup-master
 	private float lightPosition = 0;
 	private Vector3 lightCenter = new Vector3(3f, 3f, 3f);
-	private float radiusA = 1f;
-	private float radiusB = 1f;
+	private float radiusA = 0.5f;
+	private float radiusB = 0.5f;
 	private PointLight pointLight; 
 	
 	public static float xOffset = 0f;
@@ -71,7 +71,7 @@ public class Player extends Block {
 	public void render(ModelBatch modelBatch, Environment environment) {
 		if (pointLight == null) {
 			pointLight = new PointLight();
-			pointLight.set(Color.RED, 
+			pointLight.set(Color.WHITE, 
 					3f, 
 					2f,
 					3f,
@@ -79,8 +79,8 @@ public class Player extends Block {
 			environment.add(pointLight);
 		}
 		
-		lightCenter.set(x, y+1, z);
-		pointLight.position.set(x, y+1, z);
+		lightCenter.set(x, y+0.1f, z);
+		pointLight.position.set(x, y+0.1f, z);
 		float delta = Gdx.graphics.getDeltaTime();
 		
 		lightPosition -= delta * 1.0f; // + clockwise, - counter-clockwise

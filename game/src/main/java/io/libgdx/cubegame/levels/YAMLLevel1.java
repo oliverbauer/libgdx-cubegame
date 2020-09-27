@@ -37,7 +37,7 @@ public class YAMLLevel1 extends Level {
 		field()[5][0][6] = TileFactory.createGround(5, 0, 6);
 		field()[5][0][7] = TileFactory.createGround(5, 0, 7);
 		field()[5][0][8] = TileFactory.createGround(5, 0, 8);
-		field()[4][0][1] = TileFactory.createTileTrappingDoor(Color.BLUE, 4, 0, 1);
+		field()[4][0][1] = TileFactory.createGround(4, 0, 1);
 		field()[4][0][2] = TileFactory.createGround(4, 0, 2);
 		field()[4][0][3] = TileFactory.createGround(4, 0, 3);
 		field()[4][0][4] = TileFactory.createGround(4, 0, 4);
@@ -55,7 +55,7 @@ public class YAMLLevel1 extends Level {
 		field()[3][0][6] = TileFactory.createGround(3, 0, 6);
 		field()[3][0][7] = TileFactory.createGround(3, 0, 7);
 		field()[3][0][8] = TileFactory.createGround(3, 0, 8);
-		field()[3][0][9] = TileFactory.createGround(3, 0, 9);
+		field()[3][0][9] = TileFactory.createBrokenTile(3, 0, 9, 5);
 		field()[3][0][10] = TileFactory.createGround(3, 0, 10);
 		field()[2][0][0] = TileFactory.createGround(2, 0, 0);
 		field()[2][0][1] = TileFactory.createGround(2, 0, 1);
@@ -77,7 +77,7 @@ public class YAMLLevel1 extends Level {
 		field()[1][0][7] = TileFactory.createGround(1, 0, 7);
 		field()[1][0][8] = TileFactory.createGround(1, 0, 8);
 		field()[1][0][9] = TileFactory.createGround(1, 0, 9);
-		field()[0][0][2] = TileFactory.createGround(0, 0, 2);
+		field()[0][0][2] = TileFactory.createBrokenTile(0, 0, 2, 1);
 		field()[0][0][3] = TileFactory.createGround(0, 0, 3);
 		field()[0][0][4] = TileFactory.createGround(0, 0, 4);
 		field()[0][0][5] = TileFactory.createGround(0, 0, 5);
@@ -113,7 +113,7 @@ public class YAMLLevel1 extends Level {
 
 	public void enemyPath0(Color color) {
 		field()[0][2][8] = TileFactory.createEnemy(color, 0,2,8);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,0,2,8);
 		r.start = new Vector3(0,1,8);
 		r.end = new Vector3(0, 1, 7);
 		r.field = field;
@@ -137,7 +137,7 @@ public class YAMLLevel1 extends Level {
 
 	public void enemyPath1(Color color) {
 		field()[2][2][10] = TileFactory.createEnemy(color, 2,2,10);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,2,2,10);
 		r.start = new Vector3(2,1,10);
 		r.end = new Vector3(3, 1, 10);
 		r.field = field;
@@ -171,7 +171,7 @@ public class YAMLLevel1 extends Level {
 
 	public void enemyPath2(Color color) {
 		field()[0][2][8] = TileFactory.createEnemy(color, 0,2,8);
-		EnemyAnimation r = new EnemyAnimation(cubeApp);
+		EnemyAnimation r = new EnemyAnimation(cubeApp,0,2,8);
 		r.start = new Vector3(0,1,8);
 		r.end = new Vector3(0, 1, 7);
 		r.field = field;

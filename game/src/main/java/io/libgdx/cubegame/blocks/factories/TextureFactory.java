@@ -43,64 +43,8 @@ public class TextureFactory {
 		
 	    return new Texture(mask);
 	}
-	
-	public static Texture createTextureWithBorder(Color color, java.awt.Color borderColor) {
-		BufferedImage bufferedImage = new BufferedImage(80, 80, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        
-        g2d.setColor(borderColor);
-        g2d.fillRect(0, 0, 80, 980);
-        
-        g2d.setColor(toAWTColor(color));
-        g2d.fillRect(2, 2, 76, 76);
-        
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-			ImageIO.write(bufferedImage, "png", baos);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        byte[] byteArray = baos.toByteArray();
-        Pixmap mask = new Pixmap(byteArray, 0, byteArray.length);
-		return new Texture( mask );
-	}
-	
-	public static Texture createLifeforceTexture(Color color) {
-		final int width = 80;
-		final int height = 80;
-		
-		BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bufferedImage.createGraphics();
-        g2d.fillRect(0, 0, width, height);
-        g2d.setColor(toAWTColor(color));
 
-        Font font = new Font("Verdana", Font.PLAIN, 20);
-        g2d.setFont(font);
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        FontMetrics fm = g2d.getFontMetrics();
-
-        String option = "$";
-
-        int x1 = (width - fm.stringWidth(option)) / 2;
-        int y1 = ((height - fm.getHeight()) / 2);
-
-        int rule = AlphaComposite.SRC_OVER;
-        Composite comp = AlphaComposite.getInstance(rule , 0.7f);
-        g2d.setComposite(comp );
-        
-        g2d.drawString(option, x1, y1 + fm.getAscent());
-        g2d.fillRect(x1 - 20, y1 - 10, fm.stringWidth(option) + 40,fm.getHeight() + 20);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        try {
-			ImageIO.write(bufferedImage, "png", baos);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        byte[] byteArray = baos.toByteArray();
-		return new Texture(new Pixmap(byteArray, 0, byteArray.length));
-	}
-
-	
+	// TODO Move to TileJumper?
 	public static Texture createJumperTexture(Color color) {
 		final int width = 80;
 		final int height = 80;
@@ -136,6 +80,7 @@ public class TextureFactory {
 		return new Texture(new Pixmap(byteArray, 0, byteArray.length));
 	}
 
+	// TODO Move to TileElevator?
 	public static Texture createElevatorTexture(Color color) {
 		final int width = 80;
 		final int height = 80;
