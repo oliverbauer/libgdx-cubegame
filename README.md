@@ -15,3 +15,7 @@ The initial example (from 2020.09.12) took approx 6 weeks of development in my f
 controlling the cube with WASD... maybe this example helps someone (but be warned: Sourcecode is not beautiful).
 
 Screenshot: ![Alt text](/screenshot/2020.09.12.jpg?raw=true "Screenshot")
+
+Uncommited changes:
+
+![Alt text](/screenshot/2021.02.14.gif?raw=true "Screenshot")
