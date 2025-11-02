@@ -21,8 +21,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -44,13 +44,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import examples.example2.CubeCornerResult.MOD;
+import io.libgdx.cubegame.levels.leveleditor.LevelBuilder;
 
 public class Example2PlayerMovement extends ApplicationAdapter {
 	public static void main(String[] args) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1920;
-		config.height = 1080;
-		new LwjglApplication(new Example2PlayerMovement(), config);
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        //config.width = 1920;
+        //config.height = 1080;
+        new Lwjgl3Application(new LevelBuilder(), config);
 	}
 
 	private Environment environment;

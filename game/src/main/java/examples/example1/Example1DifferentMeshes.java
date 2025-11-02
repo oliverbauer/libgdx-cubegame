@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -34,13 +34,14 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.math.Vector3;
 
 import examples.example1.CubeCornerResult.MOD;
+import io.libgdx.cubegame.levels.leveleditor.LevelBuilder;
 
 public class Example1DifferentMeshes extends ApplicationAdapter {
 	public static void main(String[] args) {
-		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1920;
-		config.height = 1080;
-		new LwjglApplication(new Example1DifferentMeshes(), config);
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        //config.width = 1920;
+        //config.height = 1080;
+        new Lwjgl3Application(new LevelBuilder(), config);
 	}
 
 	private Environment environment;

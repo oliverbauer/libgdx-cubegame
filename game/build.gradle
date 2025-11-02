@@ -1,0 +1,35 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2')
+    }
+}
+
+dependencies {
+    implementation 'org.imgscalr:imgscalr-lib:4.2'
+    implementation 'com.badlogicgames.gdx:gdx-freetype-platform:1.9.11:natives-desktop'
+    implementation 'com.badlogicgames.gdx:gdx-freetype:1.9.11'
+    implementation 'com.github.mgsx-dev.gdx-gltf:gltf:1.0.0-rc.1'
+    implementation 'ch.qos.logback:logback-classic:1.5.20'
+    implementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.11'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.2'
+    implementation "com.badlogicgames.gdx:gdx-backend-headless:1.9.11"
+    implementation "com.badlogicgames.gdx:gdx:1.9.11"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.9.11:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-box2d:1.9.11"
+    implementation "com.badlogicgames.gdx:gdx-box2d-platform:1.9.11:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-bullet:1.9.11"
+    implementation "com.badlogicgames.gdx:gdx-bullet-platform:1.9.11:natives-desktop"
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
